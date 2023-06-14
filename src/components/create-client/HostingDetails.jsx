@@ -38,7 +38,7 @@ const HostingDetails = () => {
         <div className="form-group input-container">
           <label htmlFor="hosting_id">Hosting ID</label>
           <input
-            type="text"
+            type="email"
             id="hosting_id"
             name="hosting_id"
             className="form-input"

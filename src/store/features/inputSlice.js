@@ -32,15 +32,19 @@ const initialState = {
   // socials
   facebookUsername: "",
   facebookPass: "",
+  facebookPath: "",
 
   instaUsername: "",
   instaPass: "",
+  instaPath: "",
 
   linkedInUsername: "",
   linkedInPass: "",
+  linkedInPath: "",
 
   twitterUsername: "",
   twitterPass: "",
+  twitterPath: "",
 
   // files
   filename: "",
@@ -133,12 +137,18 @@ const inputSlice = createSlice({
     setFacebookPass: (state, action) => {
       state.facebookPass = action.payload;
     },
+    setFacebookPath: (state, action) => {
+      state.facebookPath = action.payload;
+    },
 
     setInstagramUsername: (state, action) => {
       state.instaUsername = action.payload;
     },
     setInstagramPass: (state, action) => {
       state.instaPass = action.payload;
+    },
+    setInstagramPath: (state, action) => {
+      state.instaPath = action.payload;
     },
 
     setLinkedInUsername: (state, action) => {
@@ -147,12 +157,18 @@ const inputSlice = createSlice({
     setLinkedInPass: (state, action) => {
       state.linkedInPass = action.payload;
     },
+    setLinkedInPath: (state, action) => {
+      state.linkedInPath = action.payload;
+    },
 
     setTwitterUsername: (state, action) => {
       state.twitterUsername = action.payload;
     },
     setTwitterPass: (state, action) => {
       state.twitterPass = action.payload;
+    },
+    setTwitterPath: (state, action) => {
+      state.twitterPath = action.payload;
     },
 
     // set files
@@ -205,12 +221,16 @@ export const {
   setHostingEndDate,
   setFacebookUsername,
   setFacebookPass,
+  setFacebookPath,
   setInstagramUsername,
   setInstagramPass,
+  setInstagramPath,
   setLinkedInUsername,
   setLinkedInPass,
+  setLinkedInPath,
   setTwitterUsername,
   setTwitterPass,
+  setTwitterPath,
   setFileName,
   setFileData,
   setFileContentType,

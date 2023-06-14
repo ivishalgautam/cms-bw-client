@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { closeModal } from "../../store/features/modal/updateModalSlice";
 import { useDispatch, useSelector } from "react-redux";
 import DatePicker from "react-datepicker";
-import ManagersDropdown from "../Dropdown";
+import ManagersDropdown from "../ManagersDropdown";
 import {
   setClientEmail,
   setClientName,
@@ -47,17 +47,17 @@ const UpdateClient = () => {
     console.log(resp.data);
   }
   return (
-    <div className="absolute top-0 left-0 w-screen min-h-screen bg-gray-900 bg-opacity-25 z-50 p-20">
+    <div className="absolute left-0 top-0 z-50 min-h-screen w-screen bg-gray-900 bg-opacity-25 p-20">
       <form
         // ref={formRef}
-        className="flex flex-col items-start justify-center gap-5 bg-white p-4 rounded-lg"
+        className="flex flex-col items-start justify-center gap-5 rounded-lg bg-white p-4"
         onSubmit={() => updateClient(clientId)}
         encType="multipart/form-data"
       >
         {/* client details */}
         <div className="w-full">
           <h2 className="text-2xl capitalize">client details</h2>
-          <div className="grid grid-cols-3 gap-5 mt-3">
+          <div className="mt-3 grid grid-cols-3 gap-5">
             {/* client name */}
             <div className="form-group input-container">
               <label htmlFor="name">Client name</label>
@@ -111,7 +111,7 @@ const UpdateClient = () => {
         {/* project details */}
         <div className="w-full">
           <h2 className="text-2xl capitalize">project details</h2>
-          <div className="grid grid-cols-3 gap-5 mt-3">
+          <div className="mt-3 grid grid-cols-3 gap-5">
             {/* project name */}
             <div className="form-group input-container col-span-3">
               <label htmlFor="project_name">Client name</label>
@@ -161,7 +161,7 @@ const UpdateClient = () => {
             {/* project managers */}
             <div className="form-group input-container col-span-3">
               <p>Project managers</p>
-              <div className="form-group input-container mt-3 multi-select w-full">
+              <div className="form-group input-container multi-select mt-3 w-full">
                 <ManagersDropdown />
               </div>
             </div>
@@ -171,7 +171,7 @@ const UpdateClient = () => {
         {/* domain details */}
         <div className="w-full">
           <h2 className="text-2xl capitalize">domain details</h2>
-          <div className="grid grid-cols-3 gap-5 mt-3">
+          <div className="mt-3 grid grid-cols-3 gap-5">
             {/* name */}
             <div className="form-group input-container">
               <label htmlFor="domain_name">Domain name</label>
@@ -253,7 +253,7 @@ const UpdateClient = () => {
         {/* domain details */}
         <div className="w-full">
           <h2 className="text-2xl capitalize">hosting details</h2>
-          <div className="grid grid-cols-3 gap-5 mt-3">
+          <div className="mt-3 grid grid-cols-3 gap-5">
             {/* name */}
             <div className="form-group input-container">
               <label htmlFor="hosting_name">Hosting name</label>
@@ -339,7 +339,7 @@ const UpdateClient = () => {
         {/* socials */}
         <div className="w-full">
           <h2 className="text-2xl capitalize">client details</h2>
-          <div className="grid grid-cols-2 gap-5 mt-3">
+          <div className="mt-3 grid grid-cols-2 gap-5">
             {/* facebook */}
             <div className="form-group input-container">
               <p>Facebook</p>
@@ -435,10 +435,10 @@ const UpdateClient = () => {
 
         {/* files */}
         {/* <FilesDetails /> */}
-        <div className="flex items-center justify-end gap-4 w-full">
+        <div className="flex w-full items-center justify-end gap-4">
           <button className="form-btn">Submit</button>
           <button
-            className="bg-white text-primary border border-primary px-5 py-2 rounded-lg hover:bg-gray-100"
+            className="rounded-lg border border-primary bg-white px-5 py-2 text-primary hover:bg-gray-100"
             onClick={() => dispatch(closeModal())}
           >
             Cancel

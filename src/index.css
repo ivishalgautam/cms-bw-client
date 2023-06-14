@@ -17,7 +17,14 @@ body {
   }
 
   .form-btn {
-    @apply rounded-lg border-none bg-primary px-5 py-2 text-white shadow-md outline-none hover:bg-primary-dark;
+    @apply rounded-lg border px-5 py-2 shadow-md outline-none hover:bg-primary-dark;
+  }
+  .form-btn-primary {
+    @apply border-primary bg-primary text-white hover:bg-primary-dark;
+  }
+
+  .form-btn-secondary {
+    @apply border-primary bg-white text-primary hover:bg-gray-100;
   }
 }
 

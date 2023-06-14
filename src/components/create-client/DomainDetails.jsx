@@ -36,7 +36,7 @@ const DomainDetails = () => {
         <div className="form-group input-container">
           <label htmlFor="domain_id">Domain ID</label>
           <input
-            type="text"
+            type="email"
             id="domain_id"
             name="domain_id"
             className="form-input"

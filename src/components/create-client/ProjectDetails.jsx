@@ -1,5 +1,5 @@
 import React from "react";
-import ManagersDropdown from "../Dropdown";
+import ManagersDropdown from "../ManagersDropdown";
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -23,7 +23,7 @@ const ProjectDetails = () => {
       <div className="mt-3 grid grid-cols-3 gap-5">
         {/* project name */}
         <div className="form-group input-container col-span-3">
-          <label htmlFor="project_name">Client name</label>
+          <label htmlFor="project_name">Project name</label>
           <input
             type="text"
             id="project_name"

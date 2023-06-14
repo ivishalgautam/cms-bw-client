@@ -7,11 +7,10 @@ import { setProManagers } from "../store/features/inputSlice";
 
 const ManagersDropdown = () => {
   const { proManagers } = useSelector((store) => store.inputVal);
-  // console.log(proManagers);
+  console.log(proManagers);
   const dispatch = useDispatch();
   const [options, setOptions] = useState([]);
   const [selectManagers, setSelectManagers] = useState([]);
-  const [managersIds, setManagersIds] = useState([]);
   useEffect(() => {
     dispatch(getClients());
     (async () => {
@@ -22,15 +21,13 @@ const ManagersDropdown = () => {
 
   const onSelect = (selectedList) => {
     setSelectManagers(selectedList);
-    const ids = selectManagers.map((item) => item._id);
-    setManagersIds(ids);
+    const ids = selectedList.map((item) => item._id);
     dispatch(setProManagers(ids));
   };
 
   const onRemove = (selectedList) => {
     setSelectManagers(selectedList);
-    const ids = selectManagers.map((item) => item._id);
-    setManagersIds(ids);
+    const ids = selectedList.map((item) => item._id);
     dispatch(setProManagers(ids));
   };
   return (
@@ -40,7 +37,7 @@ const ManagersDropdown = () => {
       onSelect={onSelect}
       onRemove={onRemove}
       selectedValues={selectManagers}
-      className="w-full"
+      className="w-full capitalize"
       placeholder="Select managers"
       style={{
         chips: {

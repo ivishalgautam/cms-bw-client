@@ -20,7 +20,7 @@ const ClientsPage = () => {
 
   useEffect(() => {
     dispatch(getClients());
-  }, [clients.lenght]);
+  }, []);
 
   const deleteClient = async (clientId) => {
     const confirmation = confirm(

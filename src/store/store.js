@@ -13,6 +13,7 @@ import {
 } from "redux-persist";
 import getClientSlice from "./features/getClientSlice";
 import updateModalSlice from "./features/modal/updateModalSlice";
+import managerSlice from "./features/managerSlice";
 
 export const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ export const store = configureStore({
     inputVal: inputSlice,
     client: getClientSlice,
     updateModal: updateModalSlice,
+    managers: managerSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

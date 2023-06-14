@@ -1,8 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { AiOutlineUser, AiOutlineUserAdd } from "react-icons/ai";
+import { Link, useLocation, useParams } from "react-router-dom";
+import {
+  MdPerson,
+  MdPersonAddAlt,
+  MdPersonAddAlt1,
+  MdPersonOutline,
+} from "react-icons/md";
 
 const Sidebar = () => {
+  const { pathname } = useLocation();
+  // console.log(pathname);
   return (
     <>
       <button
@@ -10,11 +17,11 @@ const Sidebar = () => {
         data-drawer-toggle="default-sidebar"
         aria-controls="default-sidebar"
         type="button"
-        className="inline-flex items-center p-2 mt-2 ml-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+        className="ml-3 mt-2 inline-flex items-center rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 sm:hidden"
       >
         <span className="sr-only">Open sidebar</span>
         <svg
-          className="w-6 h-6"
+          className="h-6 w-6"
           aria-hidden="true"
           fill="currentColor"
           viewBox="0 0 20 20"
@@ -30,26 +37,62 @@ const Sidebar = () => {
 
       <aside
         id="default-sidebar"
-        className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
+        className="fixed left-0 top-0 z-40 h-screen w-64 -translate-x-full transition-transform sm:translate-x-0"
         aria-label="Sidebar"
       >
-        <div className="h-full px-3 py-4 overflow-y-auto bg-primary  shadow-lg rounded-tr-3xl rounded-br-3xl text-white">
-          <ul className="space-y-2 font-medium">
+        <div className="h-full overflow-y-auto rounded-br-3xl rounded-tr-3xl bg-primary px-3 py-4 text-white shadow-lg">
+          <span className="text-3xl font-bold">Logo</span>
+          <ul className="mt-5 space-y-2 font-medium">
             <li>
               <Link
                 to={"/clients"}
-                className="flex items-center p-2 rounded-lg hover:bg-primary-dark"
+                className={`flex items-center rounded-lg p-2 hover:bg-primary-dark ${
+                  pathname === "/clients" ? "bg-primary-dark" : ""
+                } transition-colors`}
               >
-                <AiOutlineUser /> <span className="ml-3">Our clients</span>
+                {pathname === "/clients" ? (
+                  <MdPerson size={20} />
+                ) : (
+                  <MdPersonOutline size={20} />
+                )}
+                <span className="ml-3 text-sm">Our clients</span>
               </Link>
             </li>
             <li>
               <Link
                 to={"/client/add"}
-                className="flex items-center p-2 rounded-lg hover:bg-primary-dark"
+                className={`flex items-center rounded-lg p-2 hover:bg-primary-dark ${
+                  pathname === "/client/add" ? "bg-primary-dark" : ""
+                } transition-colors`}
               >
-                <AiOutlineUserAdd />
-                <span className="ml-3">Add clients</span>
+                {pathname === "/client/add" ? (
+                  <MdPersonAddAlt1 size={20} />
+                ) : (
+                  <MdPersonAddAlt size={20} />
+                )}
+                <span className="ml-3 text-sm">Add clients</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                to={"/project-managers"}
+                className={`flex items-center rounded-lg p-2 hover:bg-primary-dark ${
+                  pathname === "/project-managers" ? "bg-primary-dark" : ""
+                } transition-colors`}
+              >
+                <MdPersonAddAlt size={20} />
+                <span className="ml-3 text-sm">Project managers</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                to={"/manager/add"}
+                className={`flex items-center rounded-lg p-2 hover:bg-primary-dark ${
+                  pathname === "/manager/add" ? "bg-primary-dark" : ""
+                } transition-colors`}
+              >
+                <MdPersonAddAlt size={20} />
+                <span className="ml-3 text-sm">Add project managers</span>
               </Link>
             </li>
           </ul>
