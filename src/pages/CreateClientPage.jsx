@@ -114,7 +114,7 @@ const CreateClientPage = () => {
   }
 
   return (
-    <div className="px-10 py-5">
+    <div className="rounded-lg bg-white px-10 py-5">
       <h1 className="text-3xl font-bold">Add new client</h1>
       <div className="mt-10">
         <form

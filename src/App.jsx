@@ -18,7 +18,7 @@ function App() {
           <Route path="/client/edit/:clientId" element={<ClientsPage />} />
           <Route path="/client/add" element={<CreateClientPage />} />
           <Route path="/client/:clientId" element={<ClientPage />} />
-          <Route path="/manager/add" element={<CreateManagerPage />} />
+          <Route path="/project-managers/add" element={<CreateManagerPage />} />
           <Route path="/project-managers" element={<ManagersPage />} />
         </Routes>
       </div>

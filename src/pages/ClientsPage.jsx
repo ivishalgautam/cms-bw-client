@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { FiEdit, FiExternalLink } from "react-icons/fi";
 import { AiOutlineDelete } from "react-icons/ai";
 import { publicRequest } from "../requesMethods";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { openModal } from "../store/features/modal/updateModalSlice";
 import UpdateClient from "../components/modals/UpdateClient";
@@ -116,7 +116,6 @@ const ClientsPage = () => {
         selectableRows
         customStyles={customStyles}
       />
-      <ToastContainer position="bottom-right" />
       {isOpened && <UpdateClient />}
     </div>
   );

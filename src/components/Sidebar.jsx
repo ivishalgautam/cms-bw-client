@@ -9,7 +9,7 @@ import {
 
 const Sidebar = () => {
   const { pathname } = useLocation();
-  // console.log(pathname);
+  console.log(pathname);
   return (
     <>
       <button
@@ -86,9 +86,9 @@ const Sidebar = () => {
             </li>
             <li>
               <Link
-                to={"/manager/add"}
+                to={"/project-managers/add"}
                 className={`flex items-center rounded-lg p-2 hover:bg-primary-dark ${
-                  pathname === "/manager/add" ? "bg-primary-dark" : ""
+                  pathname === "/project-managers/add" ? "bg-primary-dark" : ""
                 } transition-colors`}
               >
                 <MdPersonAddAlt size={20} />

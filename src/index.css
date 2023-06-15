@@ -13,7 +13,7 @@ body {
     @apply flex flex-col items-start justify-center;
   }
   .form-input {
-    @apply mt-2 w-full rounded-sm border-none bg-white px-3 py-2 text-sm outline-none ring-1 ring-slate-300 transition-all placeholder:text-sm focus:ring-primary;
+    @apply mt-2 w-full rounded-sm border-none bg-gray-50 px-3 py-2 text-sm outline-none ring-1 ring-slate-300 transition-all placeholder:text-sm focus:ring-primary;
   }
 
   .form-btn {
