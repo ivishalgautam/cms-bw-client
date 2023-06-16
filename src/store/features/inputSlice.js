@@ -68,121 +68,15 @@ const inputSlice = createSlice({
   name: "input",
   initialState,
   reducers: {
-    // set client details
-    setClientName: (state, action) => {
-      state.clientName = action.payload;
+    setFieldValue: (state, action) => {
+      const { field, value } = action.payload;
+      state[field] = value;
     },
-    setClientEmail: (state, action) => {
-      state.clientEmail = action.payload;
-    },
-    setClientPhone: (state, action) => {
-      state.clientPhone = action.payload;
-    },
-
-    // set project details
-    setProName: (state, action) => {
-      state.proName = action.payload;
-    },
-    setProStartDate: (state, action) => {
-      state.proStartDate = action.payload;
-    },
-    setProExpDate: (state, action) => {
-      state.proExpDate = action.payload;
-    },
-    setProEndDate: (state, action) => {
-      state.proEndDate = action.payload;
-    },
-    setProManagers: (state, action) => {
-      state.proManagers = action.payload;
-    },
-
-    // set domain details
-    setDomainName: (state, action) => {
-      state.domainName = action.payload;
-    },
-    setDomainId: (state, action) => {
-      state.domainId = action.payload;
-    },
-    setDomainPass: (state, action) => {
-      state.domainPass = action.payload;
-    },
-    setDomainStartDate: (state, action) => {
-      state.domainStartDate = action.payload;
-    },
-    setDomainEndDate: (state, action) => {
-      state.domainEndDate = action.payload;
-    },
-
-    // set hosting details
-    setHostingName: (state, action) => {
-      state.hostingName = action.payload;
-    },
-    setHostingId: (state, action) => {
-      state.hostingId = action.payload;
-    },
-    setHostingPass: (state, action) => {
-      state.hostingPass = action.payload;
-    },
-    setHostingStartDate: (state, action) => {
-      state.hostingStartDate = action.payload;
-    },
-    setHostingEndDate: (state, action) => {
-      state.hostingEndDate = action.payload;
-    },
-
-    // set social details
-    setFacebookUsername: (state, action) => {
-      state.facebookUsername = action.payload;
-    },
-    setFacebookPass: (state, action) => {
-      state.facebookPass = action.payload;
-    },
-    setFacebookPath: (state, action) => {
-      state.facebookPath = action.payload;
-    },
-
-    setInstagramUsername: (state, action) => {
-      state.instaUsername = action.payload;
-    },
-    setInstagramPass: (state, action) => {
-      state.instaPass = action.payload;
-    },
-    setInstagramPath: (state, action) => {
-      state.instaPath = action.payload;
-    },
-
-    setLinkedInUsername: (state, action) => {
-      state.linkedInUsername = action.payload;
-    },
-    setLinkedInPass: (state, action) => {
-      state.linkedInPass = action.payload;
-    },
-    setLinkedInPath: (state, action) => {
-      state.linkedInPath = action.payload;
-    },
-
-    setTwitterUsername: (state, action) => {
-      state.twitterUsername = action.payload;
-    },
-    setTwitterPass: (state, action) => {
-      state.twitterPass = action.payload;
-    },
-    setTwitterPath: (state, action) => {
-      state.twitterPath = action.payload;
-    },
-
-    // set files
-    setFileName: (state, action) => {
-      state.filename = action.payload;
-    },
-    setFileData: (state, action) => {
-      const { name, size, lastModified } = action.payload;
-      console.log(name, size, lastModified);
-      state.fileData = { name, size, lastModified };
-    },
-    setFileContentType: (state, action) => {
-      state.fileContentType = action.payload;
-    },
+    // setFileData: (state, action) => {
+    //   const { name, size, lastModified } = action.payload;
+    //   state.fileData = { name, size, lastModified };
+    // },
+    clearAllFields: () => initialState,
   },
   extraReducers: (builder) => {
     builder.addCase(getInputValues.pending, (state) => {
@@ -200,40 +94,6 @@ const inputSlice = createSlice({
   },
 });
 
-export const {
-  setClientName,
-  setClientEmail,
-  setClientPhone,
-  setProName,
-  setProStartDate,
-  setProExpDate,
-  setProEndDate,
-  setProManagers,
-  setDomainName,
-  setDomainId,
-  setDomainPass,
-  setDomainStartDate,
-  setDomainEndDate,
-  setHostingName,
-  setHostingId,
-  setHostingPass,
-  setHostingStartDate,
-  setHostingEndDate,
-  setFacebookUsername,
-  setFacebookPass,
-  setFacebookPath,
-  setInstagramUsername,
-  setInstagramPass,
-  setInstagramPath,
-  setLinkedInUsername,
-  setLinkedInPass,
-  setLinkedInPath,
-  setTwitterUsername,
-  setTwitterPass,
-  setTwitterPath,
-  setFileName,
-  setFileData,
-  setFileContentType,
-} = inputSlice.actions;
+export const { setFieldValue, clearAllFields } = inputSlice.actions;
 
 export default inputSlice.reducer;

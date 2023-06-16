@@ -1,10 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import {
-  setFileContentType,
-  setFileData,
-  setFileName,
-} from "../../store/features/inputSlice";
+import {} from "../../store/features/inputSlice";
 
 const FilesDetails = () => {
   const dispatch = useDispatch();
@@ -31,7 +27,7 @@ const FilesDetails = () => {
   return (
     <div className="w-full">
       <h2 className="text-2xl capitalize">files details</h2>
-      <div className="grid grid-cols-3 gap-5 mt-3">
+      <div className="mt-3 grid grid-cols-3 gap-5">
         {/* file content */}
         <div className="form-group input-container">
           <label htmlFor="file">Files</label>

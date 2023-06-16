@@ -2,13 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DatePicker from "react-datepicker";
 
-import {
-  setHostingEndDate,
-  setHostingId,
-  setHostingName,
-  setHostingPass,
-  setHostingStartDate,
-} from "../../store/features/inputSlice";
+import { setFieldValue } from "../../store/features/inputSlice";
 
 const HostingDetails = () => {
   const { hostingStartDate, hostingEndDate } = useSelector(
@@ -29,7 +23,12 @@ const HostingDetails = () => {
             className="form-input"
             placeholder="Enter hosting name"
             onChange={(e) => {
-              dispatch(setHostingName(e.target.value));
+              dispatch(
+                setFieldValue({
+                  field: "hostingName",
+                  value: e.target.value,
+                })
+              );
             }}
           />
         </div>
@@ -44,7 +43,12 @@ const HostingDetails = () => {
             className="form-input"
             placeholder="Enter hosting id"
             onChange={(e) => {
-              dispatch(setHostingId(e.target.value));
+              dispatch(
+                setFieldValue({
+                  field: "hostingId",
+                  value: e.target.value,
+                })
+              );
             }}
           />
         </div>
@@ -59,7 +63,12 @@ const HostingDetails = () => {
             className="form-input"
             placeholder="Enter hosting password"
             onChange={(e) => {
-              dispatch(setHostingPass(e.target.value));
+              dispatch(
+                setFieldValue({
+                  field: "hostingPass",
+                  value: e.target.value,
+                })
+              );
             }}
           />
         </div>
@@ -72,7 +81,12 @@ const HostingDetails = () => {
               hostingStartDate !== "" ? new Date(hostingStartDate) : new Date()
             }
             onChange={(date) =>
-              dispatch(setHostingStartDate(date.toISOString()))
+              dispatch(
+                setFieldValue({
+                  field: "hostingStartDate",
+                  value: date.toISOString(),
+                })
+              )
             }
             className="form-input"
           />
@@ -85,7 +99,14 @@ const HostingDetails = () => {
             selected={
               hostingEndDate !== "" ? new Date(hostingEndDate) : new Date()
             }
-            onChange={(date) => dispatch(setHostingEndDate(date.toISOString()))}
+            onChange={(date) =>
+              dispatch(
+                setFieldValue({
+                  field: "hostingEndDate",
+                  value: date.toISOString(),
+                })
+              )
+            }
             className="form-input"
           />
         </div>

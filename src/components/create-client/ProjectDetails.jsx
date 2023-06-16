@@ -3,12 +3,7 @@ import ManagersDropdown from "../ManagersDropdown";
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
-import {
-  setProEndDate,
-  setProExpDate,
-  setProName,
-  setProStartDate,
-} from "../../store/features/inputSlice";
+import { setFieldValue } from "../../store/features/inputSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const ProjectDetails = () => {
@@ -31,7 +26,9 @@ const ProjectDetails = () => {
             className="form-input"
             placeholder="Enter project name"
             onChange={(e) => {
-              dispatch(setProName(e.target.value));
+              dispatch(
+                setFieldValue({ field: "proName", value: e.target.value })
+              );
             }}
           />
         </div>
@@ -40,7 +37,14 @@ const ProjectDetails = () => {
           <p>Project start date</p>
           <DatePicker
             selected={proStartDate !== "" ? new Date(proStartDate) : new Date()}
-            onChange={(date) => dispatch(setProStartDate(date.toISOString()))}
+            onChange={(date) =>
+              dispatch(
+                setFieldValue({
+                  field: "proStartDate",
+                  value: date.toISOString(),
+                })
+              )
+            }
             className="form-input"
           />
         </div>
@@ -49,7 +53,14 @@ const ProjectDetails = () => {
           <p>Project expected date</p>
           <DatePicker
             selected={proExpDate !== "" ? new Date(proExpDate) : new Date()}
-            onChange={(date) => dispatch(setProExpDate(date.toISOString()))}
+            onChange={(date) =>
+              dispatch(
+                setFieldValue({
+                  field: "proExpDate",
+                  value: date.toISOString(),
+                })
+              )
+            }
             className="form-input"
           />
         </div>
@@ -58,7 +69,14 @@ const ProjectDetails = () => {
           <p>Project end date</p>
           <DatePicker
             selected={proEndDate !== "" ? new Date(proEndDate) : new Date()}
-            onChange={(date) => dispatch(setProEndDate(date.toISOString()))}
+            onChange={(date) =>
+              dispatch(
+                setFieldValue({
+                  field: "proEndDate",
+                  value: date.toISOString(),
+                })
+              )
+            }
             className="form-input"
           />
         </div>

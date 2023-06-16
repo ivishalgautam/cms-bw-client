@@ -8,6 +8,7 @@ import FilesDetails from "../components/create-client/FilesDetails";
 import { publicRequest } from "../requesMethods";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { clearAllFields } from "../store/features/inputSlice";
 
 const CreateClientPage = () => {
   const {
@@ -45,6 +46,8 @@ const CreateClientPage = () => {
     fileData,
     fileContentType,
   } = useSelector((store) => store.inputVal);
+
+  const dispatch = useDispatch();
 
   const clientdata = {
     clientDetails: {
@@ -107,7 +110,7 @@ const CreateClientPage = () => {
     e.preventDefault();
     const resp = await publicRequest.post("/client", clientdata);
     if (resp.statusText === "OK") {
-      formRef.current.reset();
+      dispatch(clearAllFields());
       alert("client created successfull");
       navigate("/clients");
     }

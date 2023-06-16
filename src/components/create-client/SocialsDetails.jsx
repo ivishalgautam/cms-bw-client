@@ -1,19 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import {
-  setFacebookPass,
-  setFacebookPath,
-  setFacebookUsername,
-  setInstagramPass,
-  setInstagramPath,
-  setInstagramUsername,
-  setLinkedInPass,
-  setLinkedInPath,
-  setLinkedInUsername,
-  setTwitterPass,
-  setTwitterPath,
-  setTwitterUsername,
-} from "../../store/features/inputSlice";
+import { setFieldValue } from "../../store/features/inputSlice";
 
 const SocialsDetails = () => {
   const dispatch = useDispatch();
@@ -30,7 +17,14 @@ const SocialsDetails = () => {
             name="facebook_username"
             className="form-input"
             placeholder="Username"
-            onChange={(e) => dispatch(setFacebookUsername(e.target.value))}
+            onChange={(e) =>
+              dispatch(
+                setFieldValue({
+                  field: "facebookUsername",
+                  value: e.target.value,
+                })
+              )
+            }
           />
           <input
             type="text"
@@ -38,7 +32,14 @@ const SocialsDetails = () => {
             name="facebook_pass"
             className="form-input"
             placeholder="Password"
-            onChange={(e) => dispatch(setFacebookPass(e.target.value))}
+            onChange={(e) =>
+              dispatch(
+                setFieldValue({
+                  field: "facebookPass",
+                  value: e.target.value,
+                })
+              )
+            }
           />
           <input
             type="url"
@@ -46,7 +47,14 @@ const SocialsDetails = () => {
             name="facebook_path"
             className="form-input"
             placeholder="Enter profile url"
-            onChange={(e) => dispatch(setFacebookPath(e.target.value))}
+            onChange={(e) =>
+              dispatch(
+                setFieldValue({
+                  field: "facebookPath",
+                  value: e.target.value,
+                })
+              )
+            }
           />
         </div>
 
@@ -59,7 +67,14 @@ const SocialsDetails = () => {
             name="instagram_username"
             className="form-input"
             placeholder="Username"
-            onChange={(e) => dispatch(setInstagramUsername(e.target.value))}
+            onChange={(e) =>
+              dispatch(
+                setFieldValue({
+                  field: "instaUsername",
+                  value: e.target.value,
+                })
+              )
+            }
           />
           <input
             type="text"
@@ -67,7 +82,14 @@ const SocialsDetails = () => {
             name="instagram_pass"
             className="form-input"
             placeholder="Password"
-            onChange={(e) => dispatch(setInstagramPass(e.target.value))}
+            onChange={(e) =>
+              dispatch(
+                setFieldValue({
+                  field: "instaPass",
+                  value: e.target.value,
+                })
+              )
+            }
           />
           <input
             type="url"
@@ -75,7 +97,14 @@ const SocialsDetails = () => {
             name="instagram_path"
             className="form-input"
             placeholder="Enter profile url"
-            onChange={(e) => dispatch(setInstagramPath(e.target.value))}
+            onChange={(e) =>
+              dispatch(
+                setFieldValue({
+                  field: "instaPath",
+                  value: e.target.value,
+                })
+              )
+            }
           />
         </div>
 
@@ -88,7 +117,14 @@ const SocialsDetails = () => {
             name="linkedin_username"
             className="form-input"
             placeholder="Username"
-            onChange={(e) => dispatch(setLinkedInUsername(e.target.value))}
+            onChange={(e) =>
+              dispatch(
+                setFieldValue({
+                  field: "linkedInUsername",
+                  value: e.target.value,
+                })
+              )
+            }
           />
           <input
             type="text"
@@ -96,7 +132,14 @@ const SocialsDetails = () => {
             name="linkedin_pass"
             className="form-input"
             placeholder="Password"
-            onChange={(e) => dispatch(setLinkedInPass(e.target.value))}
+            onChange={(e) =>
+              dispatch(
+                setFieldValue({
+                  field: "linkedInPass",
+                  value: e.target.value,
+                })
+              )
+            }
           />
           <input
             type="url"
@@ -104,7 +147,14 @@ const SocialsDetails = () => {
             name="linked_path"
             className="form-input"
             placeholder="Enter profile url"
-            onChange={(e) => dispatch(setLinkedInPath(e.target.value))}
+            onChange={(e) =>
+              dispatch(
+                setFieldValue({
+                  field: "linkedInPath",
+                  value: e.target.value,
+                })
+              )
+            }
           />
         </div>
 
@@ -117,7 +167,14 @@ const SocialsDetails = () => {
             name="twitter_username"
             className="form-input"
             placeholder="Username"
-            onChange={(e) => dispatch(setTwitterUsername(e.target.value))}
+            onChange={(e) =>
+              dispatch(
+                setFieldValue({
+                  field: "twitterUsername",
+                  value: e.target.value,
+                })
+              )
+            }
           />
           <input
             type="text"
@@ -125,7 +182,14 @@ const SocialsDetails = () => {
             name="twitter_pass"
             className="form-input"
             placeholder="Password"
-            onChange={(e) => dispatch(setTwitterPass(e.target.value))}
+            onChange={(e) =>
+              dispatch(
+                setFieldValue({
+                  field: "twitterPass",
+                  value: e.target.value,
+                })
+              )
+            }
           />
           <input
             type="url"
@@ -133,7 +197,14 @@ const SocialsDetails = () => {
             name="twitter_path"
             className="form-input"
             placeholder="Enter profile url"
-            onChange={(e) => dispatch(setTwitterPath(e.target.value))}
+            onChange={(e) =>
+              dispatch(
+                setFieldValue({
+                  field: "twitterPath",
+                  value: e.target.value,
+                })
+              )
+            }
           />
         </div>
       </div>

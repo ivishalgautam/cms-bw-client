@@ -1,57 +1,112 @@
-import React from "react";
+import React, { useState } from "react";
 import { publicRequest } from "../../requesMethods";
 import { useParams } from "react-router-dom";
 import { closeModal } from "../../store/features/modal/updateModalSlice";
 import { useDispatch, useSelector } from "react-redux";
 import DatePicker from "react-datepicker";
 import ManagersDropdown from "../ManagersDropdown";
-import {
-  setClientEmail,
-  setClientName,
-  setClientPhone,
-  setDomainEndDate,
-  setDomainId,
-  setDomainName,
-  setDomainPass,
-  setDomainStartDate,
-  setFacebookPass,
-  setFacebookUsername,
-  setHostingEndDate,
-  setHostingId,
-  setHostingName,
-  setHostingPass,
-  setHostingStartDate,
-  setInstagramPass,
-  setInstagramUsername,
-  setLinkedInPass,
-  setLinkedInUsername,
-  setProEndDate,
-  setProExpDate,
-  setProName,
-  setProStartDate,
-  setTwitterPass,
-  setTwitterUsername,
-} from "../../store/features/inputSlice";
+import { clearAllFields, setFieldValue } from "../../store/features/inputSlice";
 
-const UpdateClient = () => {
-  const { proStartDate, proEndDate, proExpDate, clientInput } = useSelector(
-    (store) => store.inputVal
-  );
+const UpdateClient = ({ id }) => {
+  const {
+    clientName,
+    clientEmail,
+    clientPhone,
+    proName,
+    proStartDate,
+    proExpDate,
+    proEndDate,
+    proManagers,
+    domainName,
+    domainId,
+    domainPass,
+    domainStartDate,
+    domainEndDate,
+    hostingName,
+    hostingId,
+    hostingPass,
+    hostingStartDate,
+    hostingEndDate,
+    facebookUsername,
+    facebookPass,
+    facebookPath,
+    instaUsername,
+    instaPass,
+    instaPath,
+    linkedInUsername,
+    linkedInPass,
+    linkedInPath,
+    twitterUsername,
+    twitterPass,
+    twitterPath,
+  } = useSelector((store) => store.inputVal);
+  // console.log(id);
 
-  console.log(clientInput);
-
-  const { clientId } = useParams();
   const dispatch = useDispatch();
-  async function updateClient(clientId) {
-    const resp = await publicRequest.put(`/client/${clientId}`);
-    console.log(resp.data);
+  async function updateClient(e, clientId) {
+    e.preventDefault();
+    const resp = await publicRequest.put(`/client/${clientId}`, {
+      clientDetails: {
+        name: clientName,
+        email: clientEmail,
+        phone: clientPhone,
+      },
+      projectDetails: {
+        projectName: proName,
+        projectStartDate: proStartDate,
+        projectExpectedDeliveryDate: proExpDate,
+        projectDeliveryDate: proEndDate,
+        projectManagers: proManagers,
+      },
+      domain: {
+        name: domainName,
+        id: domainId,
+        password: domainPass,
+        startDate: domainStartDate,
+        endDate: domainEndDate,
+      },
+      hosting: {
+        name: hostingName,
+        id: hostingId,
+        password: hostingPass,
+        startDate: hostingStartDate,
+        endDate: hostingEndDate,
+      },
+      socials: {
+        facebook: {
+          id: facebookUsername,
+          password: facebookPass,
+          url: facebookPath,
+        },
+        instagram: {
+          id: instaUsername,
+          password: instaPass,
+          url: instaPath,
+        },
+        linkedin: {
+          id: linkedInUsername,
+          password: linkedInPass,
+          url: linkedInPath,
+        },
+        twitter: {
+          id: twitterUsername,
+          password: twitterPass,
+          url: twitterPath,
+        },
+      },
+    });
+    // console.log(resp.data);
+    if (resp.status === 200) {
+      dispatch(closeModal());
+      dispatch(clearAllFields());
+    }
   }
   return (
     <div className="absolute left-0 top-0 z-50 min-h-screen w-screen bg-gray-900 bg-opacity-25 p-20">
       <form
         // ref={formRef}
         className="flex flex-col items-start justify-center gap-5 rounded-lg bg-white p-4"
-        onSubmit={() => updateClient(clientId)}
+        onSubmit={(e) => updateClient(e, id)}
         encType="multipart/form-data"
       >
         {/* client details */}
@@ -67,9 +122,14 @@ const UpdateClient = () => {
                 name="name"
                 className="form-input"
                 placeholder="Enter name"
-                value={clientInput?.clientDetails?.name}
+                value={clientName}
                 onChange={(e) => {
-                  dispatch(setClientName(e.target.value));
+                  dispatch(
+                    setFieldValue({
+                      field: "clientName",
+                      value: e.target.value,
+                    })
+                  );
                 }}
               />
             </div>
@@ -83,9 +143,14 @@ const UpdateClient = () => {
                 name="email"
                 className="form-input"
                 placeholder="Enter email address"
-                value={clientInput?.clientDetails?.email}
+                value={clientEmail}
                 onChange={(e) => {
-                  dispatch(setClientEmail(e.target.value));
+                  dispatch(
+                    setFieldValue({
+                      field: "clientEmail",
+                      value: e.target.value,
+                    })
+                  );
                 }}
               />
             </div>
@@ -99,9 +164,14 @@ const UpdateClient = () => {
                 name="phone"
                 className="form-input"
                 placeholder="Enter phone number"
-                value={clientInput?.clientDetails?.phone}
+                value={clientPhone}
                 onChange={(e) => {
-                  dispatch(setClientPhone(e.target.value));
+                  dispatch(
+                    setFieldValue({
+                      field: "clientPhone",
+                      value: e.target.value,
+                    })
+                  );
                 }}
               />
             </div>
@@ -121,40 +191,64 @@ const UpdateClient = () => {
                 name="project_name"
                 className="form-input"
                 placeholder="Enter project name"
-                value={clientInput?.projectDetails?.projectName}
+                value={proName}
                 onChange={(e) => {
-                  dispatch(setProName(e.target.value));
+                  dispatch(
+                    setFieldValue({
+                      field: "proName",
+                      value: e.target.value,
+                    })
+                  );
                 }}
               />
             </div>
             {/* project start date */}
             <div className="form-group input-container">
-              <p>Project start date</p>
+              <label>Project start date</label>
               <DatePicker
                 selected={
                   proStartDate !== "" ? new Date(proStartDate) : new Date()
                 }
                 onChange={(date) =>
-                  dispatch(setProStartDate(date.toISOString()))
+                  dispatch(
+                    setFieldValue({
+                      field: "proStartDate",
+                      value: date.toISOString(),
+                    })
+                  )
                 }
                 className="form-input"
               />
             </div>
             {/* project expected delivery date */}
             <div className="form-group input-container">
-              <p>Project expected date</p>
+              <label>Project expected date</label>
               <DatePicker
                 selected={proExpDate !== "" ? new Date(proExpDate) : new Date()}
-                onChange={(date) => dispatch(setProExpDate(date.toISOString()))}
+                onChange={(date) =>
+                  dispatch(
+                    setFieldValue({
+                      field: "proExpDate",
+                      value: date.toISOString(),
+                    })
+                  )
+                }
                 className="form-input"
               />
             </div>
             {/* project delivery date */}
             <div className="form-group input-container">
-              <p>Project end date</p>
+              <label>Project end date</label>
               <DatePicker
                 selected={proEndDate !== "" ? new Date(proEndDate) : new Date()}
-                onChange={(date) => dispatch(setProEndDate(date.toISOString()))}
+                onChange={(date) =>
+                  dispatch(
+                    setFieldValue({
+                      field: "proEndDate",
+                      value: date.toISOString(),
+                    })
+                  )
+                }
                 className="form-input"
               />
             </div>
@@ -181,9 +275,14 @@ const UpdateClient = () => {
                 name="domain_name"
                 className="form-input"
                 placeholder="Enter domain name"
-                value={clientInput?.domain?.name}
+                value={domainName}
                 onChange={(e) => {
-                  disatch(setDomainName(e.target.value));
+                  dispatch(
+                    setFieldValue({
+                      field: "domainName",
+                      value: e.target.value,
+                    })
+                  );
                 }}
               />
             </div>
@@ -196,9 +295,14 @@ const UpdateClient = () => {
                 name="domain_id"
                 className="form-input"
                 placeholder="Enter domain id"
-                value={clientInput?.domain?.id}
+                value={domainId}
                 onChange={(e) => {
-                  disatch(setDomainId(e.target.value));
+                  dispatch(
+                    setFieldValue({
+                      field: "domainId",
+                      value: e.target.value,
+                    })
+                  );
                 }}
               />
             </div>
@@ -211,126 +315,162 @@ const UpdateClient = () => {
                 name="domain_password"
                 className="form-input"
                 placeholder="Enter domain password"
-                value={clientInput?.domain?.password}
+                value={domainPass}
                 onChange={(e) => {
-                  disatch(setDomainPass(e.target.value));
+                  dispatch(
+                    setFieldValue({
+                      field: "domainPass",
+                      value: e.target.value,
+                    })
+                  );
                 }}
               />
             </div>
             {/* start date */}
             <div className="form-group input-container">
-              <label htmlFor="domain_start_date">Domain start date</label>
-              <input
-                type="text"
-                id="domain_start_date"
-                name="domain_start_date"
+              <label>Domain start date</label>
+              <DatePicker
+                selected={
+                  domainStartDate !== ""
+                    ? new Date(domainStartDate)
+                    : new Date()
+                }
+                onChange={(date) =>
+                  dispatch(
+                    setFieldValue({
+                      field: "domainStartDate",
+                      value: date.toISOString(),
+                    })
+                  )
+                }
                 className="form-input"
-                placeholder="Enter start date"
-                value={clientInput?.domain?.startDate}
-                onChange={(e) => {
-                  disatch(setDomainStartDate(e.target.value));
-                }}
               />
             </div>
             {/* end date */}
             <div className="form-group input-container">
-              <label htmlFor="domain_end_date">Domain end date</label>
-              <input
-                type="text"
-                id="domain_end_date"
-                name="domain_end_date"
+              <label>Domain end date</label>
+              <DatePicker
+                selected={
+                  domainEndDate !== "" ? new Date(domainEndDate) : new Date()
+                }
+                onChange={(date) =>
+                  dispatch(
+                    setFieldValue({
+                      field: "domainEndDate",
+                      value: date.toISOString(),
+                    })
+                  )
+                }
                 className="form-input"
-                placeholder="Enter end date"
-                value={clientInput?.domain?.endDate}
-                onChange={(e) => {
-                  disatch(setDomainEndDate(e.target.value));
-                }}
               />
             </div>
           </div>
         </div>
 
-        {/* domain details */}
+        {/* hosting details */}
         <div className="w-full">
           <h2 className="text-2xl capitalize">hosting details</h2>
           <div className="mt-3 grid grid-cols-3 gap-5">
             {/* name */}
             <div className="form-group input-container">
-              <label htmlFor="hosting_name">Hosting name</label>
+              <label>Hosting name</label>
               <input
                 type="text"
                 id="hosting_name"
                 name="hosting_name"
                 className="form-input"
                 placeholder="Enter hosting name"
-                value={clientInput?.hosting?.name}
+                value={hostingName}
                 onChange={(e) => {
-                  dispatch(setHostingName(e.target.value));
+                  dispatch(
+                    setFieldValue({
+                      field: "hostingName",
+                      value: e.target.value,
+                    })
+                  );
                 }}
               />
             </div>
 
             {/* id */}
             <div className="form-group input-container">
-              <label htmlFor="hosting_id">Hosting ID</label>
+              <label>Hosting ID</label>
               <input
                 type="text"
                 id="hosting_id"
                 name="hosting_id"
                 className="form-input"
                 placeholder="Enter hosting id"
-                value={clientInput?.hosting?.id}
+                value={hostingId}
                 onChange={(e) => {
-                  dispatch(setHostingId(e.target.value));
+                  dispatch(
+                    setFieldValue({
+                      field: "hostingId",
+                      value: e.target.value,
+                    })
+                  );
                 }}
               />
             </div>
 
             {/* password */}
             <div className="form-group input-container">
-              <label htmlFor="hosting_password">Hosting password</label>
+              <label>Hosting password</label>
               <input
                 type="text"
-                id="hosting_password"
-                name="hosting_password"
+                id="hosting_pass"
+                name="hosting_pass"
                 className="form-input"
                 placeholder="Enter hosting password"
-                value={clientInput?.hosting?.password}
+                value={hostingPass}
                 onChange={(e) => {
-                  dispatch(setHostingPass(e.target.value));
+                  dispatch(
+                    setFieldValue({
+                      field: "hostingPass",
+                      value: e.target.value,
+                    })
+                  );
                 }}
               />
             </div>
 
             {/* start date */}
             <div className="form-group input-container">
-              <label htmlFor="hosting_start_date">Hosting start date</label>
-              <input
-                type="text"
-                id="hosting_start_date"
-                name="hosting_start_date"
+              <label>Hosting start date</label>
+              <DatePicker
+                selected={
+                  hostingStartDate !== ""
+                    ? new Date(hostingStartDate)
+                    : new Date()
+                }
+                onChange={(date) =>
+                  dispatch(
+                    setFieldValue({
+                      field: "hostingStartDate",
+                      value: date.toISOString(),
+                    })
+                  )
+                }
                 className="form-input"
-                placeholder="Enter hosting date"
-                value={clientInput?.hosting?.startDate}
-                onChange={(e) => {
-                  dispatch(setHostingStartDate(e.target.value));
-                }}
               />
             </div>
 
             {/* end date */}
             <div className="form-group input-container">
-              <label htmlFor="hosting_end_date">Hosting end date</label>
-              <input
-                type="text"
-                id="hosting_end_date"
-                name="hosting_end_date"
+              <label>Hosting end date</label>
+              <DatePicker
+                selected={
+                  hostingEndDate !== "" ? new Date(hostingEndDate) : new Date()
+                }
+                onChange={(date) =>
+                  dispatch(
+                    setFieldValue({
+                      field: "hostingEndDate",
+                      value: date.toISOString(),
+                    })
+                  )
+                }
                 className="form-input"
-                placeholder="Enter hosting end date"
-                value={clientInput?.hosting?.endDate}
-                onChange={(e) => {
-                  dispatch(setHostingEndDate(e.target.value));
-                }}
               />
             </div>
           </div>
@@ -349,8 +489,15 @@ const UpdateClient = () => {
                 name="facebook_username"
                 className="form-input"
                 placeholder="Username"
-                value={clientInput?.socials?.facebook?.id}
-                onChange={(e) => dispatch(setFacebookUsername(e.target.value))}
+                value={facebookUsername}
+                onChange={(e) =>
+                  dispatch(
+                    setFieldValue({
+                      field: "facebookUsername",
+                      value: e.target.value,
+                    })
+                  )
+                }
               />
               <input
                 type="text"
@@ -358,8 +505,31 @@ const UpdateClient = () => {
                 name="facebook_pass"
                 className="form-input"
                 placeholder="Password"
-                value={clientInput?.socials?.facebook?.password}
-                onChange={(e) => dispatch(setFacebookPass(e.target.value))}
+                value={facebookPass}
+                onChange={(e) =>
+                  dispatch(
+                    setFieldValue({
+                      field: "facebookPass",
+                      value: e.target.value,
+                    })
+                  )
+                }
+              />
+              <input
+                type="text"
+                id="facebook_path"
+                name="facebook_path"
+                className="form-input"
+                placeholder="Enter profile url"
+                value={facebookPath}
+                onChange={(e) =>
+                  dispatch(
+                    setFieldValue({
+                      field: "facebookPath",
+                      value: e.target.value,
+                    })
+                  )
+                }
               />
             </div>
 
@@ -372,8 +542,15 @@ const UpdateClient = () => {
                 name="instagram_username"
                 className="form-input"
                 placeholder="Username"
-                value={clientInput?.socials?.instagram?.id}
-                onChange={(e) => dispatch(setInstagramUsername(e.target.value))}
+                value={instaUsername}
+                onChange={(e) =>
+                  dispatch(
+                    setFieldValue({
+                      field: "instaUsername",
+                      value: e.target.value,
+                    })
+                  )
+                }
               />
               <input
                 type="text"
@@ -381,8 +558,31 @@ const UpdateClient = () => {
                 name="instagram_pass"
                 className="form-input"
                 placeholder="Password"
-                value={clientInput?.socials?.instagram?.password}
-                onChange={(e) => dispatch(setInstagramPass(e.target.value))}
+                value={instaPass}
+                onChange={(e) =>
+                  dispatch(
+                    setFieldValue({
+                      field: "instaPass",
+                      value: e.target.value,
+                    })
+                  )
+                }
+              />
+              <input
+                type="text"
+                id="instagram_path"
+                name="instagram_path"
+                className="form-input"
+                placeholder="Enter profile url"
+                value={instaPath}
+                onChange={(e) =>
+                  dispatch(
+                    setFieldValue({
+                      field: "instaPath",
+                      value: e.target.value,
+                    })
+                  )
+                }
               />
             </div>
 
@@ -395,8 +595,15 @@ const UpdateClient = () => {
                 name="linkedin_username"
                 className="form-input"
                 placeholder="Username"
-                value={clientInput?.socials?.linkedin?.id}
-                onChange={(e) => dispatch(setLinkedInUsername(e.target.value))}
+                value={linkedInUsername}
+                onChange={(e) =>
+                  dispatch(
+                    setFieldValue({
+                      field: "linkedInUsername",
+                      value: e.target.value,
+                    })
+                  )
+                }
               />
               <input
                 type="text"
@@ -404,8 +611,31 @@ const UpdateClient = () => {
                 name="linkedin_pass"
                 className="form-input"
                 placeholder="Password"
-                value={clientInput?.socials?.linkedin?.password}
-                onChange={(e) => dispatch(setLinkedInPass(e.target.value))}
+                value={linkedInPass}
+                onChange={(e) =>
+                  dispatch(
+                    setFieldValue({
+                      field: "linkedInPass",
+                      value: e.target.value,
+                    })
+                  )
+                }
+              />
+              <input
+                type="text"
+                id="linkedin_path"
+                name="linkedin_path"
+                className="form-input"
+                placeholder="Enter profile url"
+                value={linkedInPath}
+                onChange={(e) =>
+                  dispatch(
+                    setFieldValue({
+                      field: "linkedInPath",
+                      value: e.target.value,
+                    })
+                  )
+                }
               />
             </div>
             {/* twitter */}
@@ -417,8 +647,15 @@ const UpdateClient = () => {
                 name="twitter_username"
                 className="form-input"
                 placeholder="Username"
-                value={clientInput?.socials?.twitter?.id}
-                onChange={(e) => dispatch(setTwitterUsername(e.target.value))}
+                value={twitterUsername}
+                onChange={(e) =>
+                  dispatch(
+                    setFieldValue({
+                      field: "twitterUsername",
+                      value: e.target.value,
+                    })
+                  )
+                }
               />
               <input
                 type="text"
@@ -426,8 +663,31 @@ const UpdateClient = () => {
                 name="twitter_pass"
                 className="form-input"
                 placeholder="Password"
-                value={clientInput?.socials?.twitter?.password}
-                onChange={(e) => dispatch(setTwitterPass(e.target.value))}
+                value={twitterPass}
+                onChange={(e) =>
+                  dispatch(
+                    setFieldValue({
+                      field: "twitterPass",
+                      value: e.target.value,
+                    })
+                  )
+                }
+              />
+              <input
+                type="text"
+                id="twitter_path"
+                name="twitter_path"
+                className="form-input"
+                placeholder="Enter profile url"
+                value={twitterPath}
+                onChange={(e) =>
+                  dispatch(
+                    setFieldValue({
+                      field: "twitterPath",
+                      value: e.target.value,
+                    })
+                  )
+                }
               />
             </div>
           </div>
@@ -436,10 +696,13 @@ const UpdateClient = () => {
         {/* files */}
         {/* <FilesDetails /> */}
         <div className="flex w-full items-center justify-end gap-4">
-          <button className="form-btn">Submit</button>
+          <button className="form-btn form-btn-primary">Submit</button>
           <button
-            className="rounded-lg border border-primary bg-white px-5 py-2 text-primary hover:bg-gray-100"
-            onClick={() => dispatch(closeModal())}
+            className="form-btn form-btn-secodary"
+            onClick={() => {
+              dispatch(closeModal());
+              dispatch(clearAllFields());
+            }}
           >
             Cancel
           </button>

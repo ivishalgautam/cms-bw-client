@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Multiselect from "multiselect-react-dropdown";
 import { useDispatch, useSelector } from "react-redux";
 import { getClients } from "../store/clientSlice";
 import { publicRequest } from "../requesMethods";
-import { setProManagers } from "../store/features/inputSlice";
+import { setFieldValue } from "../store/features/inputSlice";
 
 const ManagersDropdown = () => {
   const { proManagers } = useSelector((store) => store.inputVal);
-  console.log(proManagers);
   const dispatch = useDispatch();
   const [options, setOptions] = useState([]);
   const [selectManagers, setSelectManagers] = useState([]);
@@ -22,13 +21,13 @@ const ManagersDropdown = () => {
   const onSelect = (selectedList) => {
     setSelectManagers(selectedList);
     const ids = selectedList.map((item) => item._id);
-    dispatch(setProManagers(ids));
+    dispatch(setFieldValue({ field: "proManagers", value: ids }));
   };
 
   const onRemove = (selectedList) => {
     setSelectManagers(selectedList);
     const ids = selectedList.map((item) => item._id);
-    dispatch(setProManagers(ids));
+    dispatch(setFieldValue({ field: "proManagers", value: ids }));
   };
   return (
     <Multiselect

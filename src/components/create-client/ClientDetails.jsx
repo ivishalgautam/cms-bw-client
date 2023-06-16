@@ -1,17 +1,13 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import {
-  setClientEmail,
-  setClientName,
-  setClientPhone,
-} from "../../store/features/inputSlice";
+import { setFieldValue } from "../../store/features/inputSlice";
 
 const ClientDetails = () => {
   const dispatch = useDispatch();
   return (
     <div className="w-full">
       <h2 className="text-2xl capitalize">client details</h2>
-      <div className="grid grid-cols-3 gap-5 mt-3">
+      <div className="mt-3 grid grid-cols-3 gap-5">
         {/* client name */}
         <div className="form-group input-container">
           <label htmlFor="name">Client name</label>
@@ -22,7 +18,9 @@ const ClientDetails = () => {
             className="form-input"
             placeholder="Enter name"
             onChange={(e) => {
-              dispatch(setClientName(e.target.value));
+              dispatch(
+                setFieldValue({ field: "clientName", value: e.target.value })
+              );
             }}
           />
         </div>
@@ -37,7 +35,9 @@ const ClientDetails = () => {
             className="form-input"
             placeholder="Enter email address"
             onChange={(e) => {
-              dispatch(setClientEmail(e.target.value));
+              dispatch(
+                setFieldValue({ field: "clientEmail", value: e.target.value })
+              );
             }}
           />
         </div>
@@ -52,7 +52,9 @@ const ClientDetails = () => {
             className="form-input"
             placeholder="Enter phone number"
             onChange={(e) => {
-              dispatch(setClientPhone(e.target.value));
+              dispatch(
+                setFieldValue({ field: "clientPhone", value: e.target.value })
+              );
             }}
           />
         </div>

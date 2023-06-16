@@ -1,13 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DatePicker from "react-datepicker";
-import {
-  setDomainEndDate,
-  setDomainId,
-  setDomainName,
-  setDomainPass,
-  setDomainStartDate,
-} from "../../store/features/inputSlice";
+import { setFieldValue } from "../../store/features/inputSlice";
 
 const DomainDetails = () => {
   const { domainStartDate, domainEndDate } = useSelector(
@@ -28,7 +22,12 @@ const DomainDetails = () => {
             className="form-input"
             placeholder="Enter domain name"
             onChange={(e) => {
-              dispatch(setDomainName(e.target.value));
+              dispatch(
+                setFieldValue({
+                  field: "domainName",
+                  value: e.target.value,
+                })
+              );
             }}
           />
         </div>
@@ -42,7 +41,12 @@ const DomainDetails = () => {
             className="form-input"
             placeholder="Enter domain id"
             onChange={(e) => {
-              dispatch(setDomainId(e.target.value));
+              dispatch(
+                setFieldValue({
+                  field: "domainId",
+                  value: e.target.value,
+                })
+              );
             }}
           />
         </div>
@@ -56,7 +60,12 @@ const DomainDetails = () => {
             className="form-input"
             placeholder="Enter domain password"
             onChange={(e) => {
-              dispatch(setDomainPass(e.target.value));
+              dispatch(
+                setFieldValue({
+                  field: "domainPass",
+                  value: e.target.value,
+                })
+              );
             }}
           />
         </div>
@@ -68,7 +77,12 @@ const DomainDetails = () => {
               domainStartDate !== "" ? new Date(domainStartDate) : new Date()
             }
             onChange={(date) =>
-              dispatch(setDomainStartDate(date.toISOString()))
+              dispatch(
+                setFieldValue({
+                  field: "domainStartDate",
+                  value: date.toISOString(),
+                })
+              )
             }
             className="form-input"
           />
@@ -80,7 +94,14 @@ const DomainDetails = () => {
             selected={
               domainEndDate !== "" ? new Date(domainEndDate) : new Date()
             }
-            onChange={(date) => dispatch(setDomainEndDate(date.toISOString()))}
+            onChange={(date) =>
+              dispatch(
+                setFieldValue({
+                  field: "domainEndDate",
+                  value: date.toISOString(),
+                })
+              )
+            }
             className="form-input"
           />
         </div>
