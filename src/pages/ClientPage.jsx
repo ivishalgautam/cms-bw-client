@@ -172,7 +172,7 @@ const ClientPage = () => {
               return (
                 <li className="flex-center gap-2 rounded bg-white px-4 py-2 shadow-md">
                   <a
-                    href={`http://localhost:4000/${file.path
+                    href={`https://cms-bw-production-646c.up.railway.app/${file.path
                       .split("/")
                       .slice(1)
                       .join("/")}`}
