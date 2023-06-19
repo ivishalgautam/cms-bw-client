@@ -1,5 +1,4 @@
 import { Route, Routes } from "react-router-dom";
-import ClientTable from "./components/ClientTable";
 import Sidebar from "./components/Sidebar";
 import ClientsPage from "./pages/ClientsPage";
 import CreateClientPage from "./pages/CreateClientPage";
@@ -11,7 +10,6 @@ import Dashboard from "./pages/Dashboard";
 function App() {
   return (
     <div className="min-h-screen bg-gray-100">
-      {/* <ClientTable /> */}
       <Sidebar />
       <div className="p-4 sm:ml-64">
         <Routes>

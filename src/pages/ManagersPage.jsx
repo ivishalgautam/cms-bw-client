@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getManagers } from "../store/features/managerSlice";
+import { getManagers } from "../store/features/manager/managerSlice";
 import DataTable from "react-data-table-component";
 import { FiEdit, FiExternalLink } from "react-icons/fi";
 import { AiOutlineDelete } from "react-icons/ai";

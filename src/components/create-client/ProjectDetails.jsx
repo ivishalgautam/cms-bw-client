@@ -3,7 +3,7 @@ import ManagersDropdown from "../ManagersDropdown";
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
-import { setFieldValue } from "../../store/features/inputSlice";
+import { setFieldValue } from "../../store/features/input/inputSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const ProjectDetails = () => {

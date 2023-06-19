@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { publicRequest } from "../requesMethods";
+import { publicRequest } from "../../../requesMethods";
 
 export const getClients = createAsyncThunk("get/clients", async (thunkAPI) => {
   try {

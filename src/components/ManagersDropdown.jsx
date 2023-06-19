@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Multiselect from "multiselect-react-dropdown";
 import { useDispatch, useSelector } from "react-redux";
-import { getClients } from "../store/clientSlice";
+import { getClients } from "../store/features/client/clientSlice";
 import { publicRequest } from "../requesMethods";
-import { setFieldValue } from "../store/features/inputSlice";
+import { setFieldValue } from "../store/features/input/inputSlice";
 
 const ManagersDropdown = () => {
   const { proManagers } = useSelector((store) => store.inputVal);

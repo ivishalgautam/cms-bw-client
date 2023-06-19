@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getClients } from "../store/clientSlice";
+import { getClients } from "../store/features/client/clientSlice";
 import DataTable, { createTheme } from "react-data-table-component";
 import { Link } from "react-router-dom";
 import { FiEdit, FiExternalLink } from "react-icons/fi";
@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { openModal } from "../store/features/modal/updateModalSlice";
 import UpdateClient from "../components/modals/UpdateClient";
-import { setFieldValue } from "../store/features/inputSlice";
+import { setFieldValue } from "../store/features/input/inputSlice";
 
 const ClientsPage = () => {
   const dispatch = useDispatch();
@@ -186,6 +186,20 @@ const ClientsPage = () => {
         </div>
       ),
       sortable: true,
+    },
+    {
+      name: "Paid",
+      selector: (row) => {
+        return (
+          <button
+            className={`${
+              row?.paid ? "bg-emerald-500" : "bg-red-500"
+            } rounded-full px-2 py-1 text-white`}
+          >
+            {row?.paid ? "Yes" : "No"}
+          </button>
+        );
+      },
     },
   ];
 

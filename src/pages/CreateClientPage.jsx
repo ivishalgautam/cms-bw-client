@@ -8,10 +8,11 @@ import FilesDetails from "../components/create-client/FilesDetails";
 import { publicRequest } from "../requesMethods";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { clearAllFields } from "../store/features/inputSlice";
+import { clearAllFields } from "../store/features/input/inputSlice";
 import Pricing from "../components/create-client/Pricing";
 
 const CreateClientPage = () => {
+  const [isCreating, setIsCreating] = useState(false);
   const formData = new FormData();
   const {
     clientName,
@@ -105,10 +106,12 @@ const CreateClientPage = () => {
       totalCost,
     },
   };
+
   formData.append("clientData", JSON.stringify(clientdata));
   const navigate = useNavigate();
   const formRef = useRef(null);
   async function handleFormSubmit(e) {
+    setIsCreating(true);
     e.preventDefault();
     const resp = await publicRequest.post("/client", formData, {
       headers: {
@@ -117,6 +120,7 @@ const CreateClientPage = () => {
     });
     console.log(resp.data);
     if (resp.statusText === "OK") {
+      setIsCreating(false);
       dispatch(clearAllFields());
       alert("client created successfull");
       navigate("/clients");
@@ -154,7 +158,7 @@ const CreateClientPage = () => {
           {/* pricing */}
           <Pricing />
           <button className="w-full rounded-lg bg-primary py-3 text-white hover:bg-primary-dark">
-            Submit
+            {isCreating ? "Creating..." : "Submit"}
           </button>
         </form>
       </div>

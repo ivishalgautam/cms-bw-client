@@ -1,6 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import clientSlice from "./clientSlice";
-import inputSlice from "./features/inputSlice";
+import clientSlice from "./features/client/clientSlice";
+import inputSlice from "./features/input/inputSlice";
+import getClientSlice from "./features/client/getClientSlice";
+import updateModalSlice from "./features/modal/updateModalSlice";
+import managerSlice from "./features/manager/managerSlice";
+import createClientSlice from "./features/client/createClientSlice";
+
 import {
   persistStore,
   persistReducer,
@@ -11,9 +16,6 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
-import getClientSlice from "./features/getClientSlice";
-import updateModalSlice from "./features/modal/updateModalSlice";
-import managerSlice from "./features/managerSlice";
 
 export const store = configureStore({
   reducer: {
@@ -22,6 +24,7 @@ export const store = configureStore({
     client: getClientSlice,
     updateModal: updateModalSlice,
     managers: managerSlice,
+    createClient: createClientSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

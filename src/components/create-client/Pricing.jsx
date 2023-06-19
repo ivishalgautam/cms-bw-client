@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   calculateTotalCost,
   setFieldValue,
-} from "../../store/features/inputSlice";
+} from "../../store/features/input/inputSlice";
 import { twMerge } from "tailwind-merge";
 
 const Pricing = () => {

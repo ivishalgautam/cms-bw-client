@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getClient } from "../store/features/getClientSlice";
+import { getClient } from "../store/features/client/getClientSlice";
 import { useParams } from "react-router-dom";
 import facebook from "../assets/icons/facebook.png";
 import instagram from "../assets/icons/instagram.png";
@@ -102,7 +102,7 @@ const ClientPage = () => {
                     </h3>
                     <div className="my-2 text-lg">
                       <span>Email: </span>
-                      <p className="font-bold">{manager.email}</p>
+                      <p className="break-words font-bold">{manager.email}</p>
                     </div>
                     <div className="text-lg">
                       <span>Phone: </span>

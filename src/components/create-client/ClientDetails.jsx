@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { setFieldValue } from "../../store/features/inputSlice";
+import { setFieldValue } from "../../store/features/input/inputSlice";
 
 const ClientDetails = () => {
   const dispatch = useDispatch();

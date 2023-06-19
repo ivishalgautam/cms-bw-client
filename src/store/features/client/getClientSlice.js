@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { publicRequest } from "../../requesMethods";
+import { publicRequest } from "../../../requesMethods";
 
 export const getClient = createAsyncThunk(
   "get/client",

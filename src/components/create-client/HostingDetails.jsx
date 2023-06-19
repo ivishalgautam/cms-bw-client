@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DatePicker from "react-datepicker";
 
-import { setFieldValue } from "../../store/features/inputSlice";
+import { setFieldValue } from "../../store/features/input/inputSlice";
 
 const HostingDetails = () => {
   const { hostingStartDate, hostingEndDate } = useSelector(

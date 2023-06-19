@@ -5,7 +5,10 @@ import { closeModal } from "../../store/features/modal/updateModalSlice";
 import { useDispatch, useSelector } from "react-redux";
 import DatePicker from "react-datepicker";
 import ManagersDropdown from "../ManagersDropdown";
-import { clearAllFields, setFieldValue } from "../../store/features/inputSlice";
+import {
+  clearAllFields,
+  setFieldValue,
+} from "../../store/features/input/inputSlice";
 
 const UpdateClient = ({ id }) => {
   const {
