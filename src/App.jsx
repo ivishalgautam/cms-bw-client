@@ -6,6 +6,7 @@ import CreateClientPage from "./pages/CreateClientPage";
 import ClientPage from "./pages/ClientPage";
 import CreateManagerPage from "./pages/CreateManagerPage";
 import ManagersPage from "./pages/ManagersPage";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Sidebar />
       <div className="p-4 sm:ml-64">
         <Routes>
+          <Route path="/" element={<Dashboard />} />
           <Route path="/clients" element={<ClientsPage />} />
           <Route path="/client/edit/:clientId" element={<ClientsPage />} />
           <Route path="/client/add" element={<CreateClientPage />} />

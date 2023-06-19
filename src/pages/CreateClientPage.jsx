@@ -9,8 +9,10 @@ import { publicRequest } from "../requesMethods";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { clearAllFields } from "../store/features/inputSlice";
+import Pricing from "../components/create-client/Pricing";
 
 const CreateClientPage = () => {
+  const formData = new FormData();
   const {
     clientName,
     clientEmail,
@@ -42,11 +44,10 @@ const CreateClientPage = () => {
     twitterUsername,
     twitterPass,
     twitterPath,
-    filename,
-    fileData,
-    fileContentType,
+    basePrice,
+    additionalCosts,
+    totalCost,
   } = useSelector((store) => store.inputVal);
-
   const dispatch = useDispatch();
 
   const clientdata = {
@@ -98,17 +99,23 @@ const CreateClientPage = () => {
         url: twitterPath,
       },
     },
-    // files: {
-    //   filename: filename,
-    //   data: fileData,
-    //   contentType: fileContentType,
-    // },
+    pricing: {
+      basePrice,
+      additionalCosts,
+      totalCost,
+    },
   };
+  formData.append("clientData", JSON.stringify(clientdata));
   const navigate = useNavigate();
   const formRef = useRef(null);
   async function handleFormSubmit(e) {
     e.preventDefault();
-    const resp = await publicRequest.post("/client", clientdata);
+    const resp = await publicRequest.post("/client", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    console.log(resp.data);
     if (resp.statusText === "OK") {
       dispatch(clearAllFields());
       alert("client created successfull");
@@ -142,7 +149,10 @@ const CreateClientPage = () => {
           <SocialsDetails />
 
           {/* files */}
-          {/* <FilesDetails /> */}
+          <FilesDetails formData={formData} />
+
+          {/* pricing */}
+          <Pricing />
           <button className="w-full rounded-lg bg-primary py-3 text-white hover:bg-primary-dark">
             Submit
           </button>

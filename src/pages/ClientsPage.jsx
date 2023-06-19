@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getClients } from "../store/clientSlice";
 import DataTable, { createTheme } from "react-data-table-component";
@@ -18,13 +18,21 @@ const ClientsPage = () => {
   const { isOpened } = useSelector((store) => store.updateModal);
   const [clientId, setClientId] = useState("");
 
-  // console.log(clients);
+  console.log(clients);
 
   useEffect(() => {
     dispatch(getClients());
   }, []);
 
-  const deleteClient = async (clientId) => {
+  const handleDelete = useCallback(
+    async (clientId) => {
+      await deleteClient(clientId);
+      dispatch(getClients());
+    },
+    [deleteClient]
+  );
+
+  async function deleteClient(clientId) {
     const confirmation = confirm(
       "Are you sure you want to delete this client?"
     );
@@ -33,7 +41,7 @@ const ClientsPage = () => {
       console.log(resp.data);
       toast("Client deleted successfully!");
     }
-  };
+  }
 
   async function getClientData(clientId) {
     const resp = await publicRequest.get(`/client/${clientId}`);
@@ -160,7 +168,7 @@ const ClientsPage = () => {
       name: "Actions",
       selector: (row) => (
         <div className="flex items-center justify-center gap-1">
-          <button onClick={() => deleteClient(row._id)}>
+          <button onClick={() => handleDelete(row._id)}>
             <AiOutlineDelete size={18} className="text-red-500" />
           </button>
           <button

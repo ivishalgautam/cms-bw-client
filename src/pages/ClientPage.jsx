@@ -6,10 +6,15 @@ import facebook from "../assets/icons/facebook.png";
 import instagram from "../assets/icons/instagram.png";
 import linkedin from "../assets/icons/linkedin.png";
 import twitter from "../assets/icons/twitter.png";
+import { FiDownload } from "react-icons/fi";
 
 const ClientPage = () => {
   const { client } = useSelector((store) => store.client);
-  console.log(client);
+  let filePath;
+  client?.files?.map((file) => {
+    filePath = file.path.split("/").slice(1).join("/");
+  });
+  console.log(filePath);
   const dispatch = useDispatch();
   const { clientId } = useParams();
   useEffect(() => {
@@ -158,6 +163,28 @@ const ClientPage = () => {
             <span>Renewal :</span>
             <h2>{new Date(client?.hosting?.endDate).toDateString()}</h2>
           </div>
+        </div>
+
+        {/* files */}
+        <div className="col-span-4 w-full p-4">
+          <ul className="flex-center w-full gap-3">
+            {client?.files?.map((file) => {
+              return (
+                <li className="flex-center gap-2 rounded bg-white px-4 py-2 shadow-md">
+                  <a
+                    href={`http://localhost:4000/${file.path
+                      .split("/")
+                      .slice(1)
+                      .join("/")}`}
+                    download
+                  >
+                    {file.filename}
+                  </a>
+                  <FiDownload className="text-primary" size={20} />
+                </li>
+              );
+            })}
+          </ul>
         </div>
       </div>
     </div>

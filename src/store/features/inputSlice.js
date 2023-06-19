@@ -47,9 +47,12 @@ const initialState = {
   twitterPath: "",
 
   // files
-  filename: "",
   fileData: null,
-  fileContentType: "",
+
+  // pricing
+  basePrice: "",
+  additionalCosts: "",
+  totalCost: "",
 };
 
 export const getInputValues = createAsyncThunk(
@@ -72,10 +75,9 @@ const inputSlice = createSlice({
       const { field, value } = action.payload;
       state[field] = value;
     },
-    // setFileData: (state, action) => {
-    //   const { name, size, lastModified } = action.payload;
-    //   state.fileData = { name, size, lastModified };
-    // },
+    calculateTotalCost: (state, action) => {
+      state.totalCost = Number(state.basePrice) + Number(state.additionalCosts);
+    },
     clearAllFields: () => initialState,
   },
   extraReducers: (builder) => {
@@ -94,6 +96,7 @@ const inputSlice = createSlice({
   },
 });
 
-export const { setFieldValue, clearAllFields } = inputSlice.actions;
+export const { setFieldValue, clearAllFields, calculateTotalCost } =
+  inputSlice.actions;
 
 export default inputSlice.reducer;

@@ -6,10 +6,11 @@ import {
   MdPersonAddAlt1,
   MdPersonOutline,
 } from "react-icons/md";
+import { AiFillHome, AiOutlineHome } from "react-icons/ai";
 
 const Sidebar = () => {
   const { pathname } = useLocation();
-  console.log(pathname);
+  // console.log(pathname);
   return (
     <>
       <button
@@ -43,6 +44,21 @@ const Sidebar = () => {
         <div className="h-full overflow-y-auto rounded-br-3xl rounded-tr-3xl bg-primary px-3 py-4 text-white shadow-lg">
           <span className="text-3xl font-bold">Logo</span>
           <ul className="mt-5 space-y-2 font-medium">
+            <li>
+              <Link
+                to={"/"}
+                className={`flex items-center rounded-lg p-2 hover:bg-primary-dark ${
+                  pathname === "/" ? "bg-primary-dark" : ""
+                } transition-colors`}
+              >
+                {pathname === "/" ? (
+                  <AiFillHome size={20} />
+                ) : (
+                  <AiOutlineHome size={20} />
+                )}
+                <span className="ml-3 text-sm">Dashboard</span>
+              </Link>
+            </li>
             <li>
               <Link
                 to={"/clients"}

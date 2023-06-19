@@ -1,28 +1,12 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import {} from "../../store/features/inputSlice";
 
-const FilesDetails = () => {
-  const dispatch = useDispatch();
-
+const FilesDetails = ({ formData }) => {
   function handleFileChange(e) {
     const files = e.target.files;
-    if (files.length > 0) {
-      const formData = new FormData();
-      for (let i = 0; i < files.length; i++) {
-        formData.append("files", files[i]);
-      }
-      console.log(formData.get("files"));
-      dispatch(setFileName(formData.get("files").name));
-      dispatch(
-        setFileData({
-          name: formData.get("files").name,
-          size: formData.get("files").size,
-          lastModified: formData.get("files").lastModified,
-        })
-      );
-      dispatch(setFileContentType(formData.get("files").type));
+    for (let i = 0; i < files.length; i++) {
+      formData.append("files", files[i]);
     }
+    console.log(files);
   }
   return (
     <div className="w-full">
@@ -34,10 +18,11 @@ const FilesDetails = () => {
           <input
             type="file"
             id="file"
-            name="file"
-            className="form-input"
-            placeholder="Select files"
+            name="files"
+            className="custom-file-input"
+            // placeholder="Select files"
             onChange={handleFileChange}
+            multiple
           />
         </div>
       </div>
