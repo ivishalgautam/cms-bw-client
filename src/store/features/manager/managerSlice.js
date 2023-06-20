@@ -17,9 +17,14 @@ const managerSlice = createSlice({
   name: "manager",
   initialState: {
     managers: [],
+    selectedManagers: [],
     isPending: false,
   },
-  reducers: {},
+  reducers: {
+    setSelectedManagers: (state, action) => {
+      state.selectedManagers = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getManagers.pending, (state) => {
       state.isPending = true;
@@ -34,4 +39,5 @@ const managerSlice = createSlice({
   },
 });
 
+export const { setSelectedManagers } = managerSlice.actions;
 export default managerSlice.reducer;

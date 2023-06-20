@@ -10,11 +10,8 @@ import { FiDownload } from "react-icons/fi";
 
 const ClientPage = () => {
   const { client } = useSelector((store) => store.client);
-  let filePath;
-  client?.files?.map((file) => {
-    filePath = file.path.split("/").slice(1).join("/");
-  });
-  console.log(filePath);
+  console.log(client);
+
   const dispatch = useDispatch();
   const { clientId } = useParams();
   useEffect(() => {
@@ -168,11 +165,14 @@ const ClientPage = () => {
         {/* files */}
         <div className="col-span-4 w-full p-4">
           <ul className="flex-center w-full gap-3">
-            {client?.files?.map((file) => {
+            {client?.files?.map((file, key) => {
               return (
-                <li className="flex-center gap-2 rounded bg-white px-4 py-2 shadow-md">
+                <li
+                  className="flex-center gap-2 rounded bg-white px-4 py-2 shadow-md"
+                  key={key}
+                >
                   <a
-                    href={`https://cms-bw-production-646c.up.railway.app/${file.path
+                    href={`http://localhost:4000/${file.path
                       .split("/")
                       .slice(1)
                       .join("/")}`}

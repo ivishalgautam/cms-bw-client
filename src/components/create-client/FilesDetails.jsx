@@ -4,9 +4,11 @@ const FilesDetails = ({ formData }) => {
   function handleFileChange(e) {
     const files = e.target.files;
     for (let i = 0; i < files.length; i++) {
-      formData.append("files", files[i]);
+      const originalFileName = files[i].name;
+      const trimmedName = originalFileName.trim().replace(/\s+/g, "_");
+      console.log(trimmedName);
+      formData.append("files", files[i], trimmedName);
     }
-    console.log(files);
   }
   return (
     <div className="w-full">
@@ -19,7 +21,7 @@ const FilesDetails = ({ formData }) => {
             type="file"
             id="file"
             name="files"
-            className="custom-file-input"
+            className="block w-full text-sm text-slate-500 file:mr-4 file:rounded-full file:border-0 file:bg-violet-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-primary hover:file:bg-violet-100"
             // placeholder="Select files"
             onChange={handleFileChange}
             multiple

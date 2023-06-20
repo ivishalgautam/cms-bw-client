@@ -13,14 +13,14 @@ const Pricing = () => {
   return (
     <div className="w-full">
       <h2 className="text-2xl capitalize">Pricing</h2>
-      <div className="mt-3 grid grid-cols-2 gap-5">
-        <div className="form-group input-container">
-          <label htmlFor="base_price">Base Price</label>
+      <div className="mt-3 grid grid-cols-3 gap-5">
+        {/* base price */}
+        <div className="form-group input-container relative">
           <input
             type="number"
             id="base_price"
             name="base_price"
-            className="form-input"
+            className="form-input peer"
             placeholder="Enter base price"
             onChange={(e) => {
               dispatch(
@@ -32,14 +32,17 @@ const Pricing = () => {
               dispatch(calculateTotalCost());
             }}
           />
+          <label htmlFor="base_price" className="form-label">
+            Base Price
+          </label>
         </div>
-        <div className="form-group input-container">
-          <label htmlFor="additional_cost">Additional cost</label>
+        {/* additional cost */}
+        <div className="form-group input-container relative">
           <input
             type="number"
             id="additional_cost"
             name="additional_cost"
-            className="form-input"
+            className="form-input peer"
             placeholder="Enter additional cost"
             onChange={(e) => {
               dispatch(
@@ -51,9 +54,34 @@ const Pricing = () => {
               dispatch(calculateTotalCost());
             }}
           />
+          <label htmlFor="additional_cost" className="form-label">
+            Additional cost
+          </label>
         </div>
-        <div className="form-group input-container col-span-2">
-          <label htmlFor="total_cost">Total Cost</label>
+        {/* partial payment */}
+        <div className="form-group input-container relative">
+          <input
+            type="number"
+            id="partial_paid"
+            name="partial_paid"
+            className="form-input peer"
+            placeholder="Enter partial payment"
+            onChange={(e) => {
+              dispatch(
+                setFieldValue({
+                  field: "partialPaid",
+                  value: Number(e.target.value),
+                })
+              );
+              dispatch(calculateTotalCost());
+            }}
+          />
+          <label htmlFor="additional_cost" className="form-label">
+            Partial payment
+          </label>
+        </div>
+        {/* total cost */}
+        <div className="form-group input-container relative col-span-3">
           <input
             // disabled
             type="number"
@@ -64,6 +92,9 @@ const Pricing = () => {
             value={totalCost}
             readOnly
           />
+          <label htmlFor="total_cost" className="form-label">
+            Total Cost
+          </label>
         </div>
       </div>
     </div>

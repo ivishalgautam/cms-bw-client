@@ -9,13 +9,12 @@ const ClientDetails = () => {
       <h2 className="text-2xl capitalize">client details</h2>
       <div className="mt-3 grid grid-cols-3 gap-5">
         {/* client name */}
-        <div className="form-group input-container">
-          <label htmlFor="name">Client name</label>
+        <div className="form-group input-container relative">
           <input
             type="text"
             id="name"
             name="name"
-            className="form-input"
+            className="form-input peer"
             placeholder="Enter name"
             onChange={(e) => {
               dispatch(
@@ -23,16 +22,18 @@ const ClientDetails = () => {
               );
             }}
           />
+          <label htmlFor="name" className="form-label">
+            Client name
+          </label>
         </div>
 
         {/* client email */}
-        <div className="form-group input-container">
-          <label htmlFor="email">Client email</label>
+        <div className="form-group input-container relative">
           <input
             type="text"
             id="email"
             name="email"
-            className="form-input"
+            className="form-input peer"
             placeholder="Enter email address"
             onChange={(e) => {
               dispatch(
@@ -40,16 +41,18 @@ const ClientDetails = () => {
               );
             }}
           />
+          <label htmlFor="email" className="form-label">
+            Client email
+          </label>
         </div>
 
         {/* client phone */}
-        <div className="form-group input-container">
-          <label htmlFor="phone">Client phone</label>
+        <div className="form-group input-container relative">
           <input
             type="text"
             id="phone"
             name="phone"
-            className="form-input"
+            className="form-input peer"
             placeholder="Enter phone number"
             onChange={(e) => {
               dispatch(
@@ -57,6 +60,9 @@ const ClientDetails = () => {
               );
             }}
           />
+          <label htmlFor="phone" className="form-label">
+            Client phone
+          </label>
         </div>
       </div>
     </div>

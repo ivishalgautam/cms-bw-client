@@ -13,7 +13,7 @@ body {
     @apply flex flex-col items-start justify-center;
   }
   .form-input {
-    @apply mt-2 w-full rounded-sm border-none bg-gray-50 px-3 py-2 text-sm outline-none ring-1 ring-slate-300 transition-all placeholder:text-sm focus:ring-primary;
+    @apply mt-2 w-full rounded-sm border-none bg-white px-3 py-2 text-sm outline-none ring-1 ring-slate-300 transition-all placeholder:text-sm placeholder:text-transparent focus:ring-primary;
   }
 
   .form-btn {
@@ -44,6 +44,9 @@ body {
   }
   .flex-around {
     @apply flex items-center justify-around;
+  }
+  .form-label {
+    @apply absolute left-0 top-3.5 ml-1 -translate-y-4 rounded bg-white px-1 text-sm duration-100 ease-linear peer-placeholder-shown:translate-y-0 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:ml-1 peer-focus:-translate-y-4 peer-focus:px-1 peer-focus:text-sm;
   }
 }
 

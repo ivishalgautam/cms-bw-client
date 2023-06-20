@@ -11,18 +11,19 @@ import "react-toastify/dist/ReactToastify.css";
 import { openModal } from "../store/features/modal/updateModalSlice";
 import UpdateClient from "../components/modals/UpdateClient";
 import { setFieldValue } from "../store/features/input/inputSlice";
+import { setSelectedManagers } from "../store/features/manager/managerSlice";
 
 const ClientsPage = () => {
   const dispatch = useDispatch();
-  const { clients, isPending } = useSelector((store) => store.clients);
+  const { clients } = useSelector((store) => store.clients);
   const { isOpened } = useSelector((store) => store.updateModal);
   const [clientId, setClientId] = useState("");
 
-  console.log(clients);
+  // console.log(clients);
 
   useEffect(() => {
     dispatch(getClients());
-  }, []);
+  }, [isOpened]);
 
   const handleDelete = useCallback(
     async (clientId) => {
@@ -58,13 +59,21 @@ const ClientsPage = () => {
       domain,
       hosting,
       socials: { facebook, instagram, linkedin, twitter },
+      pricing: { basePrice, additionalCosts, partialPaid, totalCost },
+      AMC,
     } = resp.data;
-    console.log(resp.data);
+    dispatch(setSelectedManagers(projectManagers));
+    // console.log(projectManagers.map((manager) => manager._id));
     dispatch(setFieldValue({ field: "clientName", value: name }));
     dispatch(setFieldValue({ field: "clientEmail", value: email }));
     dispatch(setFieldValue({ field: "clientPhone", value: phone }));
     dispatch(setFieldValue({ field: "proName", value: projectName }));
-    dispatch(setFieldValue({ field: "proMangers", value: projectManagers }));
+    dispatch(
+      setFieldValue({
+        field: "proManagers",
+        value: projectManagers.map((manager) => manager._id),
+      })
+    );
     dispatch(
       setFieldValue({
         field: "proStartDate",
@@ -83,6 +92,7 @@ const ClientsPage = () => {
         value: new Date(projectExpectedDeliveryDate).toISOString(),
       })
     );
+    // dispatch
     dispatch(setFieldValue({ field: "domainName", value: domain?.name }));
     dispatch(setFieldValue({ field: "domainId", value: domain?.id }));
     dispatch(setFieldValue({ field: "domainPass", value: domain?.password }));
@@ -129,17 +139,40 @@ const ClientsPage = () => {
     dispatch(setFieldValue({ field: "twitterUsername", value: twitter?.id }));
     dispatch(setFieldValue({ field: "twitterPass", value: twitter?.password }));
     dispatch(setFieldValue({ field: "twitterPath", value: twitter?.url }));
+    dispatch(setFieldValue({ field: "basePrice", value: basePrice }));
+    dispatch(
+      setFieldValue({
+        field: "additionalCosts",
+        value: !additionalCosts ? 0 : additionalCosts,
+      })
+    );
+    dispatch(
+      setFieldValue({
+        field: "partialPaid",
+        value: !partialPaid ? 0 : partialPaid,
+      })
+    );
+    dispatch(
+      setFieldValue({ field: "totalCost", value: !totalCost ? 0 : totalCost })
+    );
+    dispatch(
+      setFieldValue({
+        field: "amcStartDate",
+        value: new Date(AMC?.startDate).toISOString(),
+      })
+    );
+    dispatch(
+      setFieldValue({
+        field: "amcEndDate",
+        value: new Date(AMC?.endDate).toISOString(),
+      })
+    );
   }
 
   const columns = [
     {
       name: "Name",
       selector: (row) => row.clientDetails.name,
-      sortable: true,
-    },
-    {
-      name: "Email",
-      selector: (row) => row.clientDetails.email,
       sortable: true,
     },
     {
@@ -188,15 +221,23 @@ const ClientsPage = () => {
       sortable: true,
     },
     {
-      name: "Paid",
+      name: "Payment",
       selector: (row) => {
         return (
           <button
             className={`${
-              row?.paid ? "bg-emerald-500" : "bg-red-500"
+              row?.payment === "Received"
+                ? "bg-emerald-500"
+                : row?.payment === "Partial Paid"
+                ? "bg-orange-500"
+                : "bg-red-500"
             } rounded-full px-2 py-1 text-white`}
           >
-            {row?.paid ? "Yes" : "No"}
+            {row?.payment === "Received"
+              ? "Paid"
+              : row?.payment === "Partial Paid"
+              ? "Partial paid"
+              : "Pending"}
           </button>
         );
       },

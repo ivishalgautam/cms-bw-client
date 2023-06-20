@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import { publicRequest } from "../../requesMethods";
-import { useParams } from "react-router-dom";
 import { closeModal } from "../../store/features/modal/updateModalSlice";
 import { useDispatch, useSelector } from "react-redux";
 import DatePicker from "react-datepicker";
 import ManagersDropdown from "../ManagersDropdown";
 import {
+  calculateTotalCost,
   clearAllFields,
   setFieldValue,
 } from "../../store/features/input/inputSlice";
+import { twMerge } from "tailwind-merge";
+import { setSelectedManagers } from "../../store/features/manager/managerSlice";
 
 const UpdateClient = ({ id }) => {
   const {
@@ -30,6 +32,8 @@ const UpdateClient = ({ id }) => {
     hostingPass,
     hostingStartDate,
     hostingEndDate,
+    amcStartDate,
+    amcEndDate,
     facebookUsername,
     facebookPass,
     facebookPath,
@@ -42,8 +46,11 @@ const UpdateClient = ({ id }) => {
     twitterUsername,
     twitterPass,
     twitterPath,
+    basePrice,
+    additionalCosts,
+    partialPaid,
+    totalCost,
   } = useSelector((store) => store.inputVal);
-  // console.log(id);
 
   const dispatch = useDispatch();
   async function updateClient(e, clientId) {
@@ -75,6 +82,10 @@ const UpdateClient = ({ id }) => {
         startDate: hostingStartDate,
         endDate: hostingEndDate,
       },
+      AMC: {
+        startDate: amcStartDate,
+        endDate: amcEndDate,
+      },
       socials: {
         facebook: {
           id: facebookUsername,
@@ -97,6 +108,12 @@ const UpdateClient = ({ id }) => {
           url: twitterPath,
         },
       },
+      pricing: {
+        basePrice,
+        additionalCosts,
+        partialPaid,
+        totalCost,
+      },
     });
     // console.log(resp.data);
     if (resp.status === 200) {
@@ -107,7 +124,6 @@ const UpdateClient = ({ id }) => {
   return (
     <div className="absolute left-0 top-0 z-50 min-h-screen w-screen bg-gray-900 bg-opacity-25 p-20">
       <form
-        // ref={formRef}
         className="flex flex-col items-start justify-center gap-5 rounded-lg bg-white p-4"
         onSubmit={(e) => updateClient(e, id)}
         encType="multipart/form-data"
@@ -479,6 +495,47 @@ const UpdateClient = ({ id }) => {
           </div>
         </div>
 
+        {/* amc */}
+        <div className="w-full">
+          <h2 className="text-2xl capitalize">AMC</h2>
+          <div className="mt-3 grid grid-cols-2 gap-5">
+            {/* start date */}
+            <div className="form-group input-container">
+              <label>AMC start date</label>
+              <DatePicker
+                selected={
+                  amcStartDate !== "" ? new Date(amcStartDate) : new Date()
+                }
+                onChange={(date) =>
+                  dispatch(
+                    setFieldValue({
+                      field: "amcStartDate",
+                      value: date.toISOString(),
+                    })
+                  )
+                }
+                className="form-input"
+              />
+            </div>
+            {/* end date */}
+            <div className="form-group input-container">
+              <label>AMC end date</label>
+              <DatePicker
+                selected={amcEndDate !== "" ? new Date(amcEndDate) : new Date()}
+                onChange={(date) =>
+                  dispatch(
+                    setFieldValue({
+                      field: "amcEndDate",
+                      value: date.toISOString(),
+                    })
+                  )
+                }
+                className="form-input"
+              />
+            </div>
+          </div>
+        </div>
+
         {/* socials */}
         <div className="w-full">
           <h2 className="text-2xl capitalize">client details</h2>
@@ -696,8 +753,94 @@ const UpdateClient = ({ id }) => {
           </div>
         </div>
 
-        {/* files */}
-        {/* <FilesDetails /> */}
+        {/* pricing */}
+        <div className="w-full">
+          <h2 className="text-2xl capitalize">Pricing</h2>
+          <div className="mt-3 grid grid-cols-3 gap-5">
+            {/* base price */}
+            <div className="form-group input-container">
+              <label htmlFor="base_price">Base Price</label>
+              <input
+                type="number"
+                id="base_price"
+                name="base_price"
+                className="form-input"
+                placeholder="Enter base price"
+                value={basePrice}
+                onChange={(e) => {
+                  dispatch(
+                    setFieldValue({
+                      field: "basePrice",
+                      value:
+                        e.target.value === "" ? "" : Number(e.target.value),
+                    })
+                  );
+                  dispatch(calculateTotalCost());
+                }}
+              />
+            </div>
+            {/* additional cost */}
+            <div className="form-group input-container">
+              <label htmlFor="additional_cost">Additional cost</label>
+              <input
+                type="number"
+                id="additional_cost"
+                name="additional_cost"
+                className="form-input"
+                placeholder="Enter additional cost"
+                value={additionalCosts}
+                onChange={(e) => {
+                  dispatch(
+                    setFieldValue({
+                      field: "additionalCosts",
+                      value:
+                        e.target.value === "" ? "" : Number(e.target.value),
+                    })
+                  );
+                  dispatch(calculateTotalCost());
+                }}
+              />
+            </div>
+            {/* partial payment */}
+            <div className="form-group input-container">
+              <label htmlFor="additional_cost">Partial payment</label>
+              <input
+                type="number"
+                id="partial_paid"
+                name="partial_paid"
+                className="form-input"
+                placeholder="Enter partial payment"
+                value={partialPaid}
+                onChange={(e) => {
+                  dispatch(
+                    setFieldValue({
+                      field: "partialPaid",
+                      value:
+                        e.target.value === "" ? "" : Number(e.target.value),
+                    })
+                  );
+                  dispatch(calculateTotalCost());
+                }}
+              />
+            </div>
+            {/* total cost */}
+            <div className="form-group input-container col-span-3">
+              <label htmlFor="total_cost">Total Cost</label>
+              <input
+                // disabled
+                type="number"
+                id="total_cost"
+                name="total_cost"
+                className={twMerge("form-input", "bg-gray-300")}
+                placeholder="Total"
+                value={totalCost}
+                readOnly
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* cta */}
         <div className="flex w-full items-center justify-end gap-4">
           <button className="form-btn form-btn-primary">Submit</button>
           <button
@@ -705,6 +848,7 @@ const UpdateClient = ({ id }) => {
             onClick={() => {
               dispatch(closeModal());
               dispatch(clearAllFields());
+              dispatch(setSelectedManagers([]));
             }}
           >
             Cancel

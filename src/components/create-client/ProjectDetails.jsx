@@ -17,13 +17,12 @@ const ProjectDetails = () => {
       <h2 className="text-2xl capitalize">project details</h2>
       <div className="mt-3 grid grid-cols-3 gap-5">
         {/* project name */}
-        <div className="form-group input-container col-span-3">
-          <label htmlFor="project_name">Project name</label>
+        <div className="form-group input-container relative col-span-3">
           <input
             type="text"
             id="project_name"
             name="project_name"
-            className="form-input"
+            className="form-input peer"
             placeholder="Enter project name"
             onChange={(e) => {
               dispatch(
@@ -31,6 +30,9 @@ const ProjectDetails = () => {
               );
             }}
           />
+          <label htmlFor="project_name" className="form-label">
+            Project name
+          </label>
         </div>
         {/* project start date */}
         <div className="form-group input-container">

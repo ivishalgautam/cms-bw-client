@@ -2,8 +2,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { publicRequest } from "../../../requesMethods";
 
 const initialState = {
-  clientInput: [],
-  isPending: false,
   // client details
   clientName: "",
   clientEmail: "",
@@ -46,13 +44,15 @@ const initialState = {
   twitterPass: "",
   twitterPath: "",
 
-  // files
-  fileData: null,
-
   // pricing
   basePrice: "",
   additionalCosts: "",
+  partialPaid: "",
   totalCost: "",
+
+  //amc
+  amcStartDate: "",
+  amcEndDate: "",
 };
 
 export const getInputValues = createAsyncThunk(
@@ -76,7 +76,11 @@ const inputSlice = createSlice({
       state[field] = value;
     },
     calculateTotalCost: (state, action) => {
-      state.totalCost = Number(state.basePrice) + Number(state.additionalCosts);
+      state.totalCost =
+        Number(state.basePrice) +
+        Number(state.additionalCosts) -
+        Number(state.partialPaid);
+      // console.log(typeof state.totalCost);
     },
     clearAllFields: () => initialState,
   },

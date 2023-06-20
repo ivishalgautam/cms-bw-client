@@ -10,6 +10,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { clearAllFields } from "../store/features/input/inputSlice";
 import Pricing from "../components/create-client/Pricing";
+import AMC from "../components/create-client/AMC";
+import { setSelectedManagers } from "../store/features/manager/managerSlice";
 
 const CreateClientPage = () => {
   const [isCreating, setIsCreating] = useState(false);
@@ -33,6 +35,8 @@ const CreateClientPage = () => {
     hostingPass,
     hostingStartDate,
     hostingEndDate,
+    amcStartDate,
+    amcEndDate,
     facebookUsername,
     facebookPass,
     facebookPath,
@@ -48,6 +52,7 @@ const CreateClientPage = () => {
     basePrice,
     additionalCosts,
     totalCost,
+    partialPaid,
   } = useSelector((store) => store.inputVal);
   const dispatch = useDispatch();
 
@@ -78,6 +83,10 @@ const CreateClientPage = () => {
       startDate: hostingStartDate,
       endDate: hostingEndDate,
     },
+    AMC: {
+      startDate: amcStartDate,
+      endDate: amcEndDate,
+    },
     socials: {
       facebook: {
         id: facebookUsername,
@@ -104,6 +113,7 @@ const CreateClientPage = () => {
       basePrice,
       additionalCosts,
       totalCost,
+      partialPaid,
     },
   };
 
@@ -111,19 +121,25 @@ const CreateClientPage = () => {
   const navigate = useNavigate();
   const formRef = useRef(null);
   async function handleFormSubmit(e) {
-    setIsCreating(true);
     e.preventDefault();
-    const resp = await publicRequest.post("/client", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-    console.log(resp.data);
-    if (resp.statusText === "OK") {
+    try {
+      setIsCreating(true);
+      const resp = await publicRequest.post("/client", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log(resp.data);
+      if (resp.statusText === "OK") {
+        setIsCreating(false);
+        dispatch(clearAllFields());
+        dispatch(setSelectedManagers([]));
+        alert("client created successfull");
+        navigate("/clients");
+      }
+    } catch (error) {
       setIsCreating(false);
-      dispatch(clearAllFields());
-      alert("client created successfull");
-      navigate("/clients");
+      console.log(error.response.data.error);
     }
   }
 
@@ -149,6 +165,9 @@ const CreateClientPage = () => {
           {/* domain details */}
           <HostingDetails />
 
+          {/* AMC */}
+          <AMC />
+
           {/* socials */}
           <SocialsDetails />
 
@@ -157,6 +176,8 @@ const CreateClientPage = () => {
 
           {/* pricing */}
           <Pricing />
+
+          {/* cta */}
           <button className="w-full rounded-lg bg-primary py-3 text-white hover:bg-primary-dark">
             {isCreating ? "Creating..." : "Submit"}
           </button>

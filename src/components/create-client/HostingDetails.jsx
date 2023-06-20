@@ -14,13 +14,12 @@ const HostingDetails = () => {
       <h2 className="text-2xl capitalize">hosting details</h2>
       <div className="mt-3 grid grid-cols-3 gap-5">
         {/* name */}
-        <div className="form-group input-container">
-          <label htmlFor="hosting_name">Hosting name</label>
+        <div className="form-group input-container relative">
           <input
             type="text"
             id="hosting_name"
             name="hosting_name"
-            className="form-input"
+            className="form-input peer"
             placeholder="Enter hosting name"
             onChange={(e) => {
               dispatch(
@@ -31,16 +30,18 @@ const HostingDetails = () => {
               );
             }}
           />
+          <label htmlFor="hosting_name" className="form-label">
+            Hosting name
+          </label>
         </div>
 
         {/* id */}
-        <div className="form-group input-container">
-          <label htmlFor="hosting_id">Hosting ID</label>
+        <div className="form-group input-container relative">
           <input
             type="email"
             id="hosting_id"
             name="hosting_id"
-            className="form-input"
+            className="form-input peer"
             placeholder="Enter hosting id"
             onChange={(e) => {
               dispatch(
@@ -51,16 +52,18 @@ const HostingDetails = () => {
               );
             }}
           />
+          <label htmlFor="hosting_id" className="form-label">
+            Hosting ID
+          </label>
         </div>
 
         {/* password */}
-        <div className="form-group input-container">
-          <label htmlFor="hosting_password">Hosting password</label>
+        <div className="form-group input-container relative">
           <input
             type="text"
             id="hosting_password"
             name="hosting_password"
-            className="form-input"
+            className="form-input peer"
             placeholder="Enter hosting password"
             onChange={(e) => {
               dispatch(
@@ -71,6 +74,9 @@ const HostingDetails = () => {
               );
             }}
           />
+          <label htmlFor="hosting_password" className="form-label">
+            Hosting password
+          </label>
         </div>
 
         {/* start date */}

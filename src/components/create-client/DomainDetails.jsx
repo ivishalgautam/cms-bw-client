@@ -13,13 +13,12 @@ const DomainDetails = () => {
       <h2 className="text-2xl capitalize">domain details</h2>
       <div className="mt-3 grid grid-cols-3 gap-5">
         {/* name */}
-        <div className="form-group input-container">
-          <label htmlFor="domain_name">Domain name</label>
+        <div className="form-group input-container relative">
           <input
             type="text"
             id="domain_name"
             name="domain_name"
-            className="form-input"
+            className="form-input peer"
             placeholder="Enter domain name"
             onChange={(e) => {
               dispatch(
@@ -30,15 +29,17 @@ const DomainDetails = () => {
               );
             }}
           />
+          <label htmlFor="domain_name" className="form-label">
+            Domain name
+          </label>
         </div>
         {/* id */}
-        <div className="form-group input-container">
-          <label htmlFor="domain_id">Domain ID</label>
+        <div className="form-group input-container relative">
           <input
             type="email"
             id="domain_id"
             name="domain_id"
-            className="form-input"
+            className="form-input peer"
             placeholder="Enter domain id"
             onChange={(e) => {
               dispatch(
@@ -49,15 +50,17 @@ const DomainDetails = () => {
               );
             }}
           />
+          <label htmlFor="domain_id" className="form-label">
+            Domain ID
+          </label>
         </div>
         {/* password */}
-        <div className="form-group input-container">
-          <label htmlFor="domain_password">Domain password</label>
+        <div className="form-group input-container relative">
           <input
             type="text"
             id="domain_password"
             name="domain_password"
-            className="form-input"
+            className="form-input peer"
             placeholder="Enter domain password"
             onChange={(e) => {
               dispatch(
@@ -68,10 +71,13 @@ const DomainDetails = () => {
               );
             }}
           />
+          <label htmlFor="domain_password" className="form-label">
+            Domain password
+          </label>
         </div>
         {/* start date */}
         <div className="form-group input-container">
-          <p>Domain start date</p>
+          <label>Domain start date</label>
           <DatePicker
             selected={
               domainStartDate !== "" ? new Date(domainStartDate) : new Date()
@@ -89,7 +95,7 @@ const DomainDetails = () => {
         </div>
         {/* end date */}
         <div className="form-group input-container">
-          <p>Domain end date</p>
+          <label>Domain end date</label>
           <DatePicker
             selected={
               domainEndDate !== "" ? new Date(domainEndDate) : new Date()

@@ -4,12 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { getClients } from "../store/features/client/clientSlice";
 import { publicRequest } from "../requesMethods";
 import { setFieldValue } from "../store/features/input/inputSlice";
+import { setSelectedManagers } from "../store/features/manager/managerSlice";
 
 const ManagersDropdown = () => {
-  const { proManagers } = useSelector((store) => store.inputVal);
   const dispatch = useDispatch();
   const [options, setOptions] = useState([]);
-  const [selectManagers, setSelectManagers] = useState([]);
+  const { selectedManagers } = useSelector((store) => store.managers);
+  // const [selectManagers, setSelectManagers] = useState([]);
+  // console.log(selectedManagers);
   useEffect(() => {
     dispatch(getClients());
     (async () => {
@@ -19,13 +21,15 @@ const ManagersDropdown = () => {
   }, []);
 
   const onSelect = (selectedList) => {
-    setSelectManagers(selectedList);
+    dispatch(setSelectedManagers(selectedList));
+    console.log(selectedList);
     const ids = selectedList.map((item) => item._id);
     dispatch(setFieldValue({ field: "proManagers", value: ids }));
   };
 
   const onRemove = (selectedList) => {
-    setSelectManagers(selectedList);
+    dispatch(setSelectedManagers(selectedList));
+    console.log(selectedList);
     const ids = selectedList.map((item) => item._id);
     dispatch(setFieldValue({ field: "proManagers", value: ids }));
   };
@@ -35,7 +39,7 @@ const ManagersDropdown = () => {
       displayValue="name"
       onSelect={onSelect}
       onRemove={onRemove}
-      selectedValues={selectManagers}
+      selectedValues={selectedManagers}
       className="w-full capitalize"
       placeholder="Select managers"
       style={{
